@@ -12,15 +12,8 @@
 import { ConfigSys } from '../controller/config.js';
 import { registry } from '../controller/registry.js';
 import { WUI } from './compat.js';
-
-const SEASON_LABEL = {
-    spring: 'Xuân', summer: 'Hạ', autumn: 'Thu', winter: 'Đông'
-};
-
-const TOOL_LABEL = {
-    shovel: 'Xẻng', sickle: 'Liềm', fertilizer: 'Phân', seed: 'Giống',
-    watercan: 'Tưới', bucket: 'Xô', pesticide: 'Thuốc'
-};
+import { el } from './dom-utils.js';
+import { SEASON_LABEL, TOOL_LABEL } from './labels.js';
 
 // Compact geometric line-icon per tool — self-contained inline SVG, no external icon asset.
 const TOOL_ICON = {
@@ -33,12 +26,10 @@ const TOOL_ICON = {
     pesticide: '<svg viewBox="0 0 24 24"><rect x="9" y="9" width="7" height="12" rx="1.5" stroke-width="2" fill="none"/><path d="M11 9V6h3v3M6 6l3 2" stroke-width="1.8" fill="none"/></svg>',
 };
 
-function el(tag, className, html) {
-    const node = document.createElement(tag);
-    if (className) node.className = className;
-    if (html !== undefined) node.innerHTML = html;
-    return node;
-}
+// Menu/apps icon (old #window-app app-show launcher button) and a settings gear
+// (old #functions row) — these bookend the tool row exactly like the original task-manager.
+const MENU_ICON = '<svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke-width="2"/><rect x="13" y="4" width="7" height="7" rx="1.5" stroke-width="2"/><rect x="4" y="13" width="7" height="7" rx="1.5" stroke-width="2"/><rect x="13" y="13" width="7" height="7" rx="1.5" stroke-width="2"/></svg>';
+const SETTINGS_ICON = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke-width="2"/><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" stroke-width="2"/></svg>';
 
 function formatMoney(amount) {
     return new Intl.NumberFormat('vi-VN').format(Math.round(amount)) + ' ' + ConfigSys.global.currency;
@@ -54,6 +45,13 @@ export function buildHud(root) {
     topBar.append(dayBadge, seasonBadge, moneyBadge);
 
     const toolbar = el('div', 'hud-toolbar');
+
+    const menuButton = el('button', 'hud-bookend hud-menu-button');
+    menuButton.type = 'button';
+    menuButton.innerHTML = `<span class="hud-tool-icon">${MENU_ICON}</span>`;
+    toolbar.appendChild(menuButton);
+
+    const toolRow = el('div', 'hud-tool-row');
     const tools = ConfigSys.land.tools.filter((name) => name !== 'undefined');
     const buttons = {};
 
@@ -68,12 +66,18 @@ export function buildHud(root) {
         // Visual-only local toggle for now — no driver.on() call yet (phase 2 wiring).
         button.addEventListener('click', () => {
             const alreadySelected = button.classList.contains('is-selected');
-            toolbar.querySelectorAll('.hud-tool').forEach((b) => b.classList.remove('is-selected'));
+            toolRow.querySelectorAll('.hud-tool').forEach((b) => b.classList.remove('is-selected'));
             if (!alreadySelected) button.classList.add('is-selected');
         });
-        toolbar.appendChild(button);
+        toolRow.appendChild(button);
         buttons[name] = button;
     });
+    toolbar.appendChild(toolRow);
+
+    const settingsButton = el('button', 'hud-bookend hud-settings-button');
+    settingsButton.type = 'button';
+    settingsButton.innerHTML = `<span class="hud-tool-icon">${SETTINGS_ICON}</span>`;
+    toolbar.appendChild(settingsButton);
 
     root.append(topBar, toolbar);
 
@@ -86,5 +90,5 @@ export function buildHud(root) {
 
     refresh();
 
-    return { refresh, buttons };
+    return { refresh, buttons, menuButton, settingsButton };
 }

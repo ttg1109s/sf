@@ -131,6 +131,29 @@ export function createTree(scale = 1) {
     return group;
 }
 
+const WATER = 0x4a90c4;
+
+export function createPond(radius = 2.2) {
+    const group = new THREE.Group();
+
+    const bank = new THREE.Mesh(
+        new THREE.CylinderGeometry(radius + 0.35, radius + 0.5, 0.25, 20),
+        new THREE.MeshStandardMaterial({ color: 0x8a8265, roughness: 1 })
+    );
+    bank.position.y = 0.02;
+    bank.receiveShadow = true;
+    group.add(bank);
+
+    const water = new THREE.Mesh(
+        new THREE.CylinderGeometry(radius, radius, 0.2, 24),
+        new THREE.MeshStandardMaterial({ color: WATER, roughness: 0.25, metalness: 0.1 })
+    );
+    water.position.y = 0.15;
+    group.add(water);
+
+    return group;
+}
+
 export function createFence(width, depth) {
     const group = new THREE.Group();
     const postHeight = 0.9;
