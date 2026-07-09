@@ -75,17 +75,21 @@ class driverControl {
             driver.on('bagLoad');
         },
 
+        userContextItemBag(payload) {
+            bagUI.showContext(payload.index);
+        },
+
         userSelectingLand(payload) {
             if (registry.control.landID === payload.index) return false;
             if (!l.setIndex(payload.index)) return false;
             registry.control.landID = payload.index;
             registry.control.landSelected = true;
 
-            l.viewer();
+            USU.secretary(l.viewer());
 
             const livestream = new Loop(100, () => {
                 if (!registry.control.userFarming) {
-                    l.viewer();
+                    USU.secretary(l.viewer());
                 }
                 if (registry.control.landSelected === false) livestream.disabled();
             }, 'interval');
@@ -225,6 +229,21 @@ class driverControl {
         },
 
 
+        // Product-related events
+        userOpenProducts() {
+            const p = new LookupProduct();
+            const groups = p.groups();
+            if (!groups) return false;
+            productUI.load(groups).render('group');
+        },
+
+        userChoiceGroupProducts(payload) {
+            const p = new LookupProduct();
+            const list = p.list(payload.groups);
+            if (!list) return false;
+            productUI.load(list, { group: payload.groups }).render('items');
+        },
+
         // Bag-related events
         bagLoad() {
             bagUI.reload(b.load());
@@ -271,6 +290,10 @@ class driverControl {
             driver.on('loadEveryThing');
             
 
+        },
+
+        saveGame() {
+            install.saveGame(registry);
         },
 
         loadEveryThing() {
