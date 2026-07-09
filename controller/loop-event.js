@@ -4,6 +4,7 @@ const loopEvent = {
 
     memory: {
         newHour: false,
+        weatherDaysReady: 0, // ngày cuối cùng đã có dữ liệu thời tiết trong bảng 'weather', tăng dần mỗi lần weatherLoad chạy
 
     },
 

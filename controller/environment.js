@@ -1,7 +1,7 @@
 /* Hàm tổng hợp dữ liệu môi trường (thời tiết, mùa) cho nông trại ================================== */
 
 const environment = () => {
-    const weather = db.select('weather', { day: registry.system.currentDate[2] })[0] || {};
+    const weather = db.select('weather', [registry.system.currentDate[2]])?.data[0] || {};
     const minTemp = fb.array.sort(weather.temperature || [15, 32]).minValue || 15;
     const maxTemp = fb.array.sort(weather.temperature || [15, 32]).maxValue || 32;
 

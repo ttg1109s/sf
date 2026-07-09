@@ -38,7 +38,7 @@ class driverControl {
             let itemData = b.info();
             if (registry.equipments[itemData.groups] !== null) return false;
             if (itemData.quantity <= 0) return false;
-            if (!fb.check.includes(ConfigSys.land.tools, itemData.groups)) return false;
+            if (!fb.check.includes(ConfigSys.land.tools, itemData.groups).result) return false;
 
             if (itemData.level > registry.player.level) {
                 driver.on('message', {
@@ -169,14 +169,14 @@ class driverControl {
         landLoad() {
             landUI.get(
                 l.load({
-                    limit: [registry.page.land * 0, 5]
+                    limit: [registry.page.land * 5, 5]
                 })
             );
         },
 
         landDataUpdate(payload) {
             const { index, report, change } = payload;
-            if (fb.check.type([index, report, change], 'undefined', true)) return false;
+            if (index === undefined || report === undefined || change === undefined) return false;
 
             l.setIndex(index);
             l.edit(report);
@@ -204,11 +204,17 @@ class driverControl {
 
             for (const i in list) db.insert('weather', { season: seasonName, ...list[i] });
 
+            loopEvent.memory.weatherDaysReady += 10;
+
         },
 
         weatherToday() {
             const { currentDate } = registry.system;
             const [day, hour] = [currentDate[2], currentDate[3]];
+
+            if (day >= loopEvent.memory.weatherDaysReady - 2) {
+                driver.on('weatherLoad');
+            }
 
             const weather = new Weather();
             let info = weather.dataSend(day, hour);
