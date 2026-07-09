@@ -88,12 +88,15 @@ class Mouse {
         const selector = this.currentSelector; // Lấy selector hiện tại từ map
 
         if (enable) {
-            $(document).on('mousedown', selector, (e) => {
+            // Pointer Events hợp nhất mouse + touch + pen trong cùng 1 luồng xử lý
+            $(document).on('pointerdown', selector, (e) => {
+                // Trên mobile, window hiển thị fullscreen (trừ chiều cao taskbar) nên không cho kéo thả
+                if (typeof responsive !== 'undefined' && responsive.isMobile) return;
                 this.startDrag(selector, e.currentTarget, e);
                 e.preventDefault();
             });
 
-            $(document).on('mousemove', (e) => {
+            $(document).on('pointermove', (e) => {
                 if (this.isDragging) {
                     this.performDrag(e);
                     if (typeof dragCallback === 'function') {
@@ -102,13 +105,13 @@ class Mouse {
                 }
             });
 
-            $(document).on('mouseup', () => {
+            $(document).on('pointerup pointercancel', () => {
                 this.stopDrag();
             });
         } else {
-            $(document).off('mousedown', selector);
-            $(document).off('mousemove');
-            $(document).off('mouseup');
+            $(document).off('pointerdown', selector);
+            $(document).off('pointermove');
+            $(document).off('pointerup pointercancel');
         }
 
         return this;
