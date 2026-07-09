@@ -1,33 +1,100 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Simple Farmer - A farming simulation game">
+    <meta name="author" content="Your Name">
     <meta name="keywords" content="Simple Farmer, Farming Game, Simulation Game">
     <title>Simple Farmer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
-    <script type="importmap">
-    {
-        "imports": {
-            "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.184.0/examples/jsm/"
-        }
-    }
-    </script>
+    <!-- CSS được tách theo từng khu vực giao diện (thư mục css/) -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/window.css">
+    <link rel="stylesheet" href="css/weather.css">
+    <link rel="stylesheet" href="css/land-info.css">
+    <link rel="stylesheet" href="css/tools-bag.css">
+    <link rel="stylesheet" href="css/inventory.css">
+    <link rel="stylesheet" href="css/circular-progress.css">
+    <link rel="stylesheet" href="css/taskbar.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/app-show.css">
+    <link rel="stylesheet" href="css/products.css">
 </head>
 
 <body>
-    <canvas id="farm-canvas"></canvas>
-    <div id="hud-root"></div>
 
-    <script type="module" src="./app.js"></script>
-    <script type="module" src="./viewer/main.js"></script>
+    <!-- Component chính của ứng dụng, được viewer/mount.js gắn (mount) nội dung vào đây -->
+    <div id="app-root"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Model: dữ liệu tĩnh (database) -->
+    <script src="model/data/products.js"></script>
+    <script src="model/data/product-detail.js"></script>
+    <script src="model/data/vendor.js"></script>
+
+    <!-- Model: hàm tiện ích dùng chung -->
+    <script src="model/utils/fb.js"></script>
+    <script src="model/utils/timer.js"></script>
+
+    <!-- Model: lớp giả lập cơ sở dữ liệu -->
+    <script src="model/db/indexdb.js"></script>
+    <script src="model/db/mysql.js"></script>
+
+    <!-- Model: các lớp nghiệp vụ (business logic) -->
+    <script src="model/weather.js"></script>
+    <script src="model/install.js"></script>
+    <script src="model/cms.js"></script>
+    <script src="model/land-master.js"></script>
+    <script src="model/land-dynamic-data.js"></script>
+    <script src="model/inventory-manager.js"></script>
+    <script src="model/stock.js"></script>
+    <script src="model/lookup-product.js"></script>
+    <script src="model/tool.js"></script>
+    <script src="model/farmer.js"></script>
+    <script src="model/loop.js"></script>
+    <script src="model/task-manager.js"></script>
+
+    <!-- Controller: cấu hình, trạng thái và điều phối sự kiện -->
+    <script src="controller/config.js"></script>
+    <script src="controller/registry.js"></script>
+    <script src="controller/driver-control.js"></script>
+    <script src="controller/environment.js"></script>
+    <script src="controller/loop-event.js"></script>
+
+    <!-- Viewer: component + gắn (mount) vào DOM -->
+    <script src="viewer/templates/app-template.js"></script>
+    <script src="viewer/mount.js"></script>
+
+    <!-- Viewer: ánh xạ DOM và cập nhật giao diện -->
+    <script src="viewer/dom.js"></script>
+    <script src="viewer/update-single-ui.js"></script>
+    <script src="viewer/system-timer.js"></script>
+    <script src="viewer/weather-ui.js"></script>
+    <script src="viewer/land-ui.js"></script>
+    <script src="viewer/bag-ui.js"></script>
+    <script src="viewer/product-ui.js"></script>
+
+    <!-- Viewer: xử lý chuột và sự kiện người dùng -->
+    <script src="viewer/mouse.js"></script>
+    <script src="viewer/events/land-events.js"></script>
+    <script src="viewer/events/tool-events.js"></script>
+    <script src="viewer/events/bag-events.js"></script>
+    <script src="viewer/events/scrollbar-events.js"></script>
+    <script src="viewer/events/product-events.js"></script>
+    <script src="viewer/events/window-events.js"></script>
+
+    <!-- Khởi động game -->
+    <script src="load.js"></script>
+
 </body>
 
 </html>
