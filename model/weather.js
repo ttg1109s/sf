@@ -167,7 +167,7 @@ class Weather {
             const humidityFromRain = fb.calc.percent(rainAmount, maxRainAmount);
 
             let finalHumidity = (humidityFromRain * 0.8 + (100 - humidityAdjustmentFromTemp) * 0.2);
-            if (finalHumidity > 95) finalHumidity = fb.random.int(5, 10) + fb.random.flt(0, 1);
+            if (finalHumidity > 95) finalHumidity = fb.random.int(96, 99) + fb.random.flt(0, 1);
             if (finalHumidity <= 0) finalHumidity = fb.random.int(1, 3) + fb.random.flt(0, 1);
             humidity.push(finalHumidity);
         }

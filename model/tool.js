@@ -18,7 +18,7 @@ class Tool {
         this.#landData.slot.cur += (this.#toolData.effectivess + this.#toolData.effectivess * (this.#attr.strength * 2));
         if (this.#landData.slot.cur >= this.#landData.slot.max)
             this.#landData.slot.cur = this.#landData.slot.max;
-        this.#landData.state.code = this.#landData.slot.cur < 1 ? null : 1;
+        this.#landData.state.code = this.#landData.slot.cur < 1 ? 0 : 1;
         this.#report = {
             changePlace: 'landSlot',
             set: {

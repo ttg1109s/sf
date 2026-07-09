@@ -225,7 +225,7 @@ class LandDynamicData {
                land.life -= land.life * upRate;
             }
 
-            if (shiftPoint >= 100 && shiftPoint <= 0) {
+            if (shiftPoint >= 100 || shiftPoint <= 0) {
                 land.life = 0;
             }
 
