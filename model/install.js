@@ -4,7 +4,39 @@
 
 */
 
+// Tăng số này mỗi khi đổi danh sách cột (createTable) của bất kỳ bảng nào bên dưới.
+// reconcileSchema() dùng số này để biết save cũ có cần đồng bộ lại cột hay không.
+const DB_SCHEMA_VERSION = 1;
+
 class Install {
+
+    // Hình dạng mặc định của 1 dòng 'land' — dùng chung cho lúc tạo game mới
+    // (newGameDatabase) VÀ lúc vá field thiếu cho save cũ (reconcileSchema),
+    // để không phải định nghĩa 2 lần 2 nơi dễ lệch nhau.
+    #landDefaultRow() {
+        return {
+            type: 'Vegetable',
+            state: { code: 0, name: 'empty' },
+            life: 100, slot: { cur: 0, max: 50 },
+            fertilizerID: null,
+            fertility: { start: null, end: null, buff: null },
+            water: { set: null, cur: null, max: null },
+            plantID: { code: null, name: null },
+            growth: { start: null, end: null, down: null },
+            pest: null, yield: null
+        };
+    }
+
+    // Bảng nào có hình dạng mặc định rõ ràng thì khai báo ở đây. Bảng nào không có
+    // (inventory/stock/weather — mỗi dòng luôn được tạo đủ field ngay từ đầu, không
+    // có field "tuỳ chọn") thì cứ để reconcileSchema() tự vá bằng null.
+    #defaultRowFor(tableName) {
+        const defaults = {
+            land: () => this.#landDefaultRow(),
+        };
+        return defaults[tableName] ? defaults[tableName]() : null;
+    }
+
     newGameDatabase() {
 
         
@@ -22,17 +54,7 @@ class Install {
         db.createTable('land', [ 'type', 'state', 'life', 'slot', 'fertilizerID', 'fertility', 'water', 'plantID', 'growth', 'pest', 'yield' ]);
         
         for (let i = 0; i < 3; i++) {
-            db.insert('land', {
-                type: 'Vegetable',
-                state: { code: 0, name: 'empty' },
-                life: 100, slot: { cur: 0, max: 50 },
-                fertilizerID: null,
-                fertility: { start: null, end: null, buff: null },
-                water: { set: null, cur: null, max: null },
-                plantID: { code: null, name: null },
-                growth: { start: null, end: null, down: null },
-                pest: null, yield: null
-            });
+            db.insert('land', this.#landDefaultRow());
         }
 
         db.createTable('inventory', [ 'itemID', 'name', 'groups', 'quantity', 'level', 'source' ]);
@@ -112,6 +134,43 @@ class Install {
 
     }
 
+    // Đồng bộ dữ liệu vừa khôi phục (từ save cũ, có thể thuộc schema cũ hơn) với
+    // schema HIỆN TẠI (đã được tạo sẵn bởi newGameDatabase() trước khi hàm này chạy):
+    // - Bảng nào không còn tồn tại trong schema hiện tại -> xoá luôn (đổi tên/gộp bảng).
+    // - Bảng nào có trong schema hiện tại nhưng save cũ không có -> giữ nguyên dữ liệu
+    //   mặc định vừa được newGameDatabase() seed sẵn (không đụng vào).
+    // - Với các bảng có cả 2 bên: từng dòng dữ liệu cũ được vá field thiếu (theo
+    //   #defaultRowFor, hoặc null nếu không có default riêng) và xoá field thừa
+    //   (cột đã bị đổi tên/xoá khỏi schema).
+    reconcileSchema(db) {
+        for (const tableName of Array.from(db.table.keys())) {
+            const columns = db.getColumns(tableName);
+
+            if (!columns) {
+                db.table.delete(tableName);
+                continue;
+            }
+
+            const defaultRow = this.#defaultRowFor(tableName);
+            const rows = db.table.get(tableName);
+
+            for (const row of rows) {
+                for (const column of columns) {
+                    if (!(column in row)) {
+                        row[column] = (defaultRow && column in defaultRow)
+                            ? fb.array.clone(defaultRow[column])
+                            : null;
+                    }
+                }
+                for (const key of Object.keys(row)) {
+                    if (!columns.includes(key)) {
+                        delete row[key];
+                    }
+                }
+            }
+        }
+    }
+
     saveGame(registry) {
 
         const idb = new IndexDB('SimpleFarmerDB', 1);
@@ -119,6 +178,7 @@ class Install {
         return idb.open('playerData', 'id').then(() => {
             const playerData = {
                 id: 'player1',
+                schemaVersion: DB_SCHEMA_VERSION,
                 registry: fb.array.clone(registry),
                 database: Array.from(db.table)
             };
@@ -156,4 +216,3 @@ class Install {
     }
 
 }
-
