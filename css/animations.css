@@ -1,0 +1,50 @@
+/* ==========================================================================
+    Keyframe Animations
+    ========================================================================== */
+@keyframes pop {
+     0% {
+          background-size: 135% 135%;
+     }
+     50% {
+          background-size: 137% 137%;
+     }
+     100% {
+          background-size: 135% 135%;
+     }
+}
+/* ==========================================================================
+    Window Animations
+    ========================================================================== */
+.window.minimize {
+     transform-origin: top center;
+     animation: zoomOut 0.3s ease-out forwards;
+}
+
+.window.maximize {
+     transform-origin: top center;
+     animation: zoomIn 0.3s ease-out forwards;
+
+}
+
+@keyframes zoomOut {
+     from {
+          opacity: 1;
+          transform: scale(1);
+     }
+     to {
+          opacity: 0;
+          transform: scale(0.5);
+     }
+}
+
+@keyframes zoomIn {
+     from {
+          opacity: 0;
+          transform: scale(0.5);
+     }
+     to {
+          opacity: 1;
+          transform: scale(1);
+     }
+}
+

@@ -1,0 +1,45 @@
+/* ==========================================================================
+    Circular Progress Component
+    ========================================================================== */
+.circular-progress {
+     position: relative;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: var(--circle-size);
+     height: var(--circle-size);
+     overflow: hidden;
+     border-radius: 50%;
+     background: var(--background-progress-color);
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+     transition: 0.6s;
+}
+
+@supports (background: conic-gradient(red, blue)) {
+     .circular-progress {
+          background: conic-gradient(var(--progress-color) calc(var(--progress) * 1%), var(--background-progress-color) 0);
+     }
+}
+
+.circular-progress::before {
+     content: '';
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     width: 85%;
+     height: 85%;
+     border-radius: 50%;
+     background-color: var(--inner-core-color);
+     transform: translate(-50%, -50%);
+}
+
+.circular-progress span {
+     position: relative;
+     z-index: 1;
+     color: #6c757d;
+}
+
+.circular-progress .growth-time {
+     font-size: x-small;
+}
+

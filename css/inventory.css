@@ -1,0 +1,170 @@
+/* ==========================================================================
+    Inventory Window
+    ========================================================================== */
+
+#bag {
+     position: absolute;
+     width: 500px;
+     border-radius: 15px;
+     background-color: #ffffff;
+     left: 50%;
+}
+#bag .eqp {
+    display: block;
+    padding: 1rem 0;
+}
+
+#bag .eqp::before {
+     content: '\ea3c';
+     vertical-align: middle;
+}
+
+#bag .equipments .items {
+    width: 40px;
+    height: 40px;
+    background-color: #fafafa;
+    transition: all 0.3s;
+    margin: 0 3px;
+
+}
+
+#bag .equipments .items[status="empty"] {
+    cursor: default;
+    transform: scale(1);
+    filter: grayscale(1);
+}
+
+#bag .equipments .items[status="equipped"] {
+    filter: grayscale(0);
+}
+
+#bag .equipments .items:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+#bag .items {
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 10px;
+}
+
+#bag .list .items {
+    height: 85px;
+    width: 85px;
+    background-color: #f6f6f6;
+    background-image: url(graphic/bag/empty.png);
+    background-size: 40%;
+}
+
+#bag .list .items:hover, #bag .list .items.selecting {
+    box-shadow: 0 0 ;
+    background-color: #9beb9e;
+}
+
+#bag .list .items .name {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    font-size: x-small;
+    text-align: center;
+    color: #555;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+#bag .list .items .quantity {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    min-width: 18px;
+    padding: 0 5px;
+    font-size: x-small;
+    text-align: center;
+    color: #555;
+    background-color: #ffffffcc;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+#bag .items[name="shovel"] {
+    background-image: url(graphic/bag/shovel.png);
+
+}
+
+#bag .items[name="sickle"] {
+    background-image: url(graphic/bag/sickle.png);
+
+}
+
+#bag .items[name="fertilizer"] {
+    background-image: url(graphic/bag/fertilizer.png);
+
+}   
+
+#bag .items[name="seed"] {
+    background-image: url(graphic/bag/seed.png);
+
+}
+#bag .items[name="watercan"] {
+    background-image: url(graphic/bag/watercan.png);
+
+}
+#bag .items[name="bucket"] {
+    background-image: url(graphic/bag/bucket.png);
+
+}
+
+#bag .items[name="pesticide"] {
+    background-image: url(graphic/bag/pesticide.png);
+
+}
+
+#bag .footer-action {
+    position: absolute;
+    left: 100px;
+    width: 150px;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+    display: none;
+}
+
+#bag .footer-action .items-context {
+
+     padding: 0.5rem;
+     background-color: #fff;
+}
+
+#bag .footer-action .items-context:hover {
+    background-image: linear-gradient(179deg, #4facfe 0%, #2cacb2 100%);
+     cursor: pointer;
+     color: #fff;
+}
+
+#bag .footer-action .icon-before::before {
+     font-size: 20px;
+}
+
+#bag .footer-action .use::before {
+     content: '\e147';
+} 
+
+#bag .footer-action .drop::before {
+     content: '\e5c9';
+} 
+
+#bag .footer-action .research::before {
+     content: '\ea9b';
+} 
+
+

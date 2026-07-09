@@ -1,0 +1,77 @@
+/* ==========================================================================
+    Main Layout & Game Area
+    ========================================================================== */
+#main {
+     width: 100vw;
+     height: 100vh;
+     overflow: hidden;
+     background-image: url(main.webp);
+     background-size: 100% 100%;
+     background-repeat: no-repeat;
+     background-position: center;
+}
+
+#landArea {
+     width: 750px;
+     height: 375px;
+}
+
+#landArea .items {
+     position: relative;
+     width: 125px;
+     height: 125px;
+     margin: 5px;
+     box-sizing: border-box;
+     cursor: none;
+     border: 2px solid #00000033;
+     border-radius: 10px;
+     background-color: #7ea60b;
+     background-size: 135%;
+     background-position: center;
+     background-repeat: no-repeat;
+}
+
+#landArea .items[state="locked"] {
+     display: none;
+}
+
+#landArea .items[state="empty"] {
+     background-image: url(graphic/land/empty.png);
+}
+
+#landArea .items[state="plowed"] {
+     background-image: url(graphic/land/plowed.png);
+}
+
+#landArea .items[state="fertilized"] {
+     background-image: url(graphic/land/fertilized.png);
+}
+
+#landArea .items[state="growing"], #landArea .items[state="harvestable"] {
+     animation: pop 3s ease-in-out infinite;
+}
+
+#landArea .items[state="growing"] {
+     background-image: url(graphic/land/growing.png);
+}
+
+#landArea .items[state="harvestable"] {
+     background-image: url(graphic/land/harvestable.png);
+}
+
+#landArea .items[state="restoring"] {
+     background-image: url(graphic/land/restoring.png);
+}
+
+#landArea .items .bar {
+     position: absolute;
+     right: 0px;
+     bottom: -25px;
+     left: 0px;
+     font-size: x-small;
+}
+
+#landArea .items .information {
+     display: none;
+}
+

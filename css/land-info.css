@@ -1,0 +1,81 @@
+/* ==========================================================================
+    Land Info Window
+    ========================================================================== */
+#landInfo {
+     position: absolute;
+     top: 20px;
+     right: 20px;
+     z-index: 1;
+     width: 350px;
+     border-radius: 20px;
+     background-color: #ffffff;
+}
+
+
+#landInfo .none-selectable {
+     z-index: 2;
+     text-align: center;
+     user-select: none;
+     border-radius: 20px;
+     background-color: #f5f5f5;
+}
+
+#landInfo .progress-bar {
+     width: 20%;
+     color: black !important;
+}
+
+.land-title {
+     margin: 0;
+     padding: 0.7rem;
+     border-bottom: 1px solid #eee;
+}
+
+.land-name .icon-before::before {
+     content: '\eb36';
+}
+
+.land-type .icon-before::before {
+     content: '\e574';
+}
+
+.land-slot .icon-before::before {
+     content: '\f88d';
+}
+
+.land-life .icon-before::before {
+     content: '\e09c';
+}
+
+.land-state .icon-before::before {
+     content: '\e9d0';
+}
+
+.land-water .icon-before::before {
+     content: '\f87a';
+}
+
+.land-fertility .icon-before::before {
+     content: '\e11d';
+}
+
+.disease .icon-before::before {
+     content: '\e10c';
+}
+
+.yield .icon-before::before {
+     content: '\e26b';
+}
+
+.humidity .icon-before::before {
+     content: '\f163';
+}
+
+.amount .icon-before::before {
+     content: '\f61f';
+}
+
+.temperature-average .icon-before::before {
+     content: '\e1ff';
+}
+

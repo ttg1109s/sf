@@ -1,0 +1,44 @@
+/* ==========================================================================
+    Utility Classes
+    ========================================================================== */
+.position-full-size {
+     position: absolute;
+     top: 0;
+     right: 0;
+     bottom: 0;
+     left: 0;
+}
+
+.position-full-width-bottom {
+     position: absolute;
+     right: 0;
+     bottom: 0;
+     left: 0;
+}
+
+.position-center-translate {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+}
+
+.icon-before {
+     display: flex;
+     align-items: center;
+}
+
+.icon-before::before {
+     margin-right: 5px;
+     font-family: 'Material Symbols Sharp';
+     font-size: 24px;
+}
+
+.bg-slot {
+     background-color: brown !important;
+}
+
+.bg-fertility {
+     background-color: rgb(231, 134, 30) !important;
+}
+

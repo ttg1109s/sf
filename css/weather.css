@@ -1,0 +1,185 @@
+/* ==========================================================================
+    Weather Window
+    ========================================================================== */
+#weather {
+     position: absolute;
+     left: 10px;
+     z-index: 1;
+     width: 350px;
+     border-radius: 20px;
+     background: white;
+}
+
+#weather .wrap {
+     position: absolute;
+     top: 20px;
+     left: 50%;
+     width: 90%;
+     transform: translate(-50%, 0);
+}
+
+#weather .weather-header {
+     position: relative;
+     height: 120px;
+     margin-bottom: 20px;
+     padding: 10px;
+     color: white;
+}
+
+#weather .weather-header .background.spring {
+     border-radius: 10px;
+     background-image: url(graphic/weather/bg-spring.jpg);
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;
+}
+
+#weather .weather-header .calendar-weeks {
+     font-size: 2rem;
+     font-weight: 500;
+}
+
+#weather .weather-header .hook {
+     position: absolute;
+     bottom: 5px;
+     left: 10px;
+     width: 12px;
+     height: 12px;
+     border: 3px solid #d28918;
+     border-radius: 100%;
+     background-color: #ffffff;
+}
+
+#weather .weather-header .hook:last-child {
+     right: 10px;
+     left: initial;
+}
+
+#weather .weather-header .hook::before {
+     content: '';
+     position: absolute;
+     top: 9px;
+     left: 50%;
+     display: block;
+     width: 3px;
+     height: 32px;
+     background-color: #d28918;
+     transform: translate(-50%, 0%);
+}
+
+#weather .weather-header .hook::after {
+     content: '';
+     position: absolute;
+     top: 40px;
+     left: 50% !important;
+     bottom: initial !important;
+     width: 12px;
+     height: 12px;
+     border: 3px solid #d28918;
+     border-radius: 100%;
+     background-color: #ffffff;
+     transform: translate(-50%, 0%);
+}
+
+#weather .weather-body {
+     gap: 0;
+     padding: 1.5rem;
+     overflow-x: hidden;
+     white-space: normal;
+     background-color: #ffffff;
+     transition: background-color 0.6s;
+}
+
+body.night .weather-body {
+     color: #ffffff !important;
+     background-color: #2b0351 !important;
+}
+
+body.night .weather-body .items {
+     background-color: #6010aa !important;
+}
+
+#weather .items {
+     display: block;
+     flex: 0 0 33.3333%;
+     max-width: 33.3333%;
+     min-width: 33.3333%;
+     padding: 0.8rem 0.5rem;
+     border-radius: 10px;
+     background: #fff;
+     transition: transform 0.5s;
+     opacity: 1;
+}
+
+#weather .items.active {
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     transform: scale(1.15);
+}
+
+#weather .condition {
+     position: relative;
+     margin-bottom: 20px;
+     background-size: cover;
+}
+
+#weather .condition::before {
+     font-family: 'Material Symbols Sharp';
+     font-weight: 900;
+     font-size: 52px;
+}
+
+#weather .condition::after {
+     content: '';
+     position: absolute;
+     bottom: -10px;
+     left: 50%;
+     width: 80%;
+     height: 1px;
+     background: rgb(183 183 183 / 50%);
+     transform: translate(-50%, 0);
+}
+
+#weather .condition[name="sunny"]::before {
+     content: "\e430";
+     color: orange;
+}
+
+#weather .condition[name="rain"]::before {
+     content: "\f176";
+     color: gray;
+}
+
+#weather .temperature {
+     position: relative;
+     color: #777777;
+     font-size: 2.2rem;
+     font-weight: bold;
+}
+
+#weather .temperature::before {
+     content: '.' attr(sup) '';
+     position: absolute;
+     top: 27px;
+     left: 40px;
+     font-size: x-small;
+}
+
+#weather .temperature::after {
+     content: '°C';
+     vertical-align: super;
+     font-size: small;
+}
+
+#weather .hours {
+     color: #777777;
+     font-size: x-small;
+}
+
+#weather .hours::before {
+     content: "\ebb2";
+     margin-right: 3px;
+     vertical-align: text-top;
+     font-family: 'Material Symbols Sharp';
+     font-weight: 900;
+}
+

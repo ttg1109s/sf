@@ -1,0 +1,29 @@
+/* ==========================================================================
+    Taskbar & App Controls
+    ========================================================================== */
+#task-manager {
+     z-index: 1000;
+     height: 50px;
+     max-height: 50px;
+     overflow: hidden;
+}
+
+#task-manager .bg-task-manager {
+     background: #eaeaea;
+     filter: blur(1px);
+}
+
+#window-app .app-show {
+     transition: 0.3s;
+}
+
+#window-app .app-show:hover {
+     color: #0e4faa;
+}
+
+#window-app .app-show::before {
+     content: '\e5c3';
+     cursor: pointer;
+     font-size: 36px;
+}
+
