@@ -116,20 +116,21 @@ class Install {
 
         const idb = new IndexDB('SimpleFarmerDB', 1);
 
-        idb.open('playerData', 'id').then(() => {
-        const playerData = {
-            id: 'player1',
-            registry: fb.array.clone(registry),
-            database: Array.from(db.table)
-        };
+        return idb.open('playerData', 'id').then(() => {
+            const playerData = {
+                id: 'player1',
+                registry: fb.array.clone(registry),
+                database: Array.from(db.table)
+            };
 
-        idb.save('playerData', playerData)
-            .then((message) => console.log(message))
-            .catch((error) => console.error(error));
-        }).catch((error) => console.error(`Failed to open database: ${error}`));
-
-
-        console.log('Game saved successfully.');
+            return idb.save('playerData', playerData);
+        }).then(() => {
+            console.log('Game saved successfully.');
+            return true;
+        }).catch((error) => {
+            console.error('Failed to save game:', error);
+            return false;
+        });
     }
 
     resumeGame() {
