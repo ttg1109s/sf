@@ -258,7 +258,7 @@ const fb = {
         findIndex(source = [], value, key = null) {
             if (source.length === 0) return -1;
             if (value === null || value === undefined) return -1;
-            if (this.check(source) === false) return -1;
+            if (fb.check.array(source) === false) return -1;
             if (key === null) {
                 return source.indexOf(value);
             } else {
@@ -282,7 +282,7 @@ const fb = {
 
         filterByKey(source = [], key = '', value) {
             if (source.length === 0 || key === '' || value === null || value === undefined) return [];
-            if (this.check(source) === false) return [];
+            if (fb.check.array(source) === false) return [];
             return source.filter(item => item[key] === value);
         },
 
@@ -333,7 +333,7 @@ const fb = {
 
         cut(source = [], original, start = 0, limit = source.length) {
             let cut = source;
-            if (!this.check(source)) return false;
+            if (!fb.check.array(source)) return false;
             if (start < 0 || limit > source.length || start >= source.length) return false;
             if (original === false) {
                 cut = [...cut];
@@ -347,7 +347,7 @@ const fb = {
         },
 
         swap(array = [], indexA = -1, indexB = -1) {
-            if (!this.check(array)) return false;
+            if (!fb.check.array(array)) return false;
             if (indexA < 0 || indexB < 0 || indexA >= array.length || indexB >= array.length) return false;
 
             const temp = array[indexA];
