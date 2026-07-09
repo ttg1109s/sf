@@ -80,6 +80,20 @@ const mainThread = new TaskManager({
         // registry.control / registry.page: KHÔNG khôi phục — đây là state của phiên
         // làm việc hiện tại (đang chọn ô nào, đang mở tab nào...), luôn bắt đầu sạch.
 
+        // currentDate/season (lịch trong game) giữ nguyên như lúc lưu — thời gian
+        // trong game "dừng" khi tắt app. Nhưng currentTime (mốc quy đổi giờ thật ->
+        // giờ game của loopEvent.clock()) PHẢI đặt lại = lúc resume, nếu không
+        // khoảng cách "đã đóng app bao lâu" sẽ bị quy đổi thành hàng nghìn ngày
+        // trong game ngay tick đầu tiên.
+        registry.system.currentTime = Date.now();
+
+        // weatherDaysReady không nằm trong registry nên không được lưu — tính lại
+        // trực tiếp từ số dòng 'weather' vừa khôi phục thay vì để mặc định 0
+        // (0 vẫn đúng về mặt an toàn, chỉ gây gọi thừa 1 lần weatherLoad, nhưng
+        // tính lại cho đúng invariant thay vì dựa vào việc "vô hại" đó).
+        const weatherRows = db.table.get('weather') || [];
+        loopEvent.memory.weatherDaysReady = weatherRows.length - 1;
+
         console.log('Đã khôi phục game đã lưu.');
 
         godAgriculture = new LandDynamicData(environment());
