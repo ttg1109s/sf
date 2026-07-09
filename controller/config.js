@@ -1,9 +1,6 @@
-/*
-    controller/config.js — Static game-balance configuration (seasons, market update cadence,
-    land layout, tool list, stock pack size, ...). Read by both model and controller layers.
-*/
+/* Cấu hình hệ thống: mùa vụ, thị trường, thông số đất đai ========================================= */
 
-export const ConfigSys = {
+const ConfigSys = {
     global: {
         startDate: 1, // 1st day of the year
         endDate: 360, // 360 days in a year
@@ -102,10 +99,7 @@ export const ConfigSys = {
 
         tools: ['undefined', 'shovel', 'sickle', 'fertilizer', 'seed', 'watercan', 'bucket', 'pesticide'],
 
-    },
-    stock: {
-
-        packSizeGram: 1000, // 1 pack = 1kg
-
     }
 }
+
+

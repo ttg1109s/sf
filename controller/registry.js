@@ -1,10 +1,6 @@
-/*
-    controller/registry.js — Mutable live game state (system/control/player/equipments/page).
-    Declared as `const` since the reference itself never changes, only its nested properties
-    are mutated in place — that's exactly what all the rest of the app relies on.
-*/
+/* Trạng thái toàn cục (registry) của game ========================================================= */
 
-export const registry = {
+let registry = {
     system: {
         gameStarted: false,
         gamePaused: false,
@@ -56,3 +52,4 @@ export const registry = {
         stock: 0
     }
 }
+
