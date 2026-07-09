@@ -72,7 +72,21 @@ const mainThread = new TaskManager({
     try {
         const data = await install.resumeGame();
 
-        db.table = new Map(data.database);
+        // Merge từng bảng thay vì ghi đè thẳng db.table = new Map(...):
+        // nếu sau này thêm bảng mới (schema đổi), bảng đó đã được newGameDatabase()
+        // seed sẵn dữ liệu mặc định ở trên — ghi đè cả Map sẽ xoá mất bảng mới đó
+        // vì save cũ vốn không có. Chỉ bảng nào CÓ trong save cũ mới bị ghi đè.
+        for (const [tableName, rows] of data.database) {
+            db.table.set(tableName, rows);
+        }
+
+        // Save thuộc schema cũ hơn hiện tại (hoặc save từ trước khi có versioning,
+        // schemaVersion === undefined) -> vá field thiếu/xoá field thừa theo đúng
+        // cột hiện tại của từng bảng (đã được newGameDatabase() tạo sẵn ở trên).
+        if (data.schemaVersion !== DB_SCHEMA_VERSION) {
+            install.reconcileSchema(db);
+            console.log(`Đã đồng bộ schema save cũ (v${data.schemaVersion}) lên schema hiện tại (v${DB_SCHEMA_VERSION}).`);
+        }
 
         Object.assign(registry.system, data.registry.system);
         Object.assign(registry.player, data.registry.player);
