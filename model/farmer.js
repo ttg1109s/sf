@@ -258,7 +258,7 @@ class Farmer {
             this.#report.update.pack = {
                 seedID: this.#land.plantID.code,
                 fertilizerID: this.#land.fertilizerID,
-                yield: fb.calc.scl(10 - this.#land.pest, 0, 5, this.#land.yield - this.#land.yield * 0.8, this.#land.yield)
+                yield: fb.calc.scl(5 - this.#land.pest, 0, 5, this.#land.yield - this.#land.yield * 0.8, this.#land.yield)
             };
 
             this.#report.message.push({ modelSend: 'farmer/pack', messCode: 1 });

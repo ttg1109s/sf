@@ -17,7 +17,7 @@ class Install {
         }).simulator();
 
         db.createTable('weather', [ 'season', 'averageTemp', 'rain', 'rainList', 'rainFall', 'temperature', 'humidity' ]);
-        db.insert('weather', { season: 'winter', ...weatherData });
+        db.insert('weather', { season: 'spring', ...weatherData });
 
         db.createTable('land', [ 'type', 'state', 'life', 'slot', 'fertilizerID', 'fertility', 'water', 'plantID', 'growth', 'pest', 'yield' ]);
         

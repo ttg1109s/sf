@@ -54,13 +54,16 @@ class LandDynamicData {
         },
 
         restoring: () => {
-        
+
+            const start = Date.now();
+            const end = start + timer.ingameToReal({ h: 12 }) * 1000;
+
             return {
                 state: {
                     name: this.#stateLabels[5],
                     code: 5
                 },
-                life: Date.now() + fb.timer.ingameToReal({ h: 12 } * 1000),
+                life: { start: start, end: end },
                 slot: {
                     cur: 0,
                     max: this.#land.slot.max
@@ -158,7 +161,7 @@ class LandDynamicData {
                 active: this.#newStateActive.harvest
             },
             restored: {
-                check: this.#land.life >= 100 && oldState === 5,
+                check: oldState === 5 && Date.now() >= this.#land.life?.end,
                 active: this.#newStateActive.restored
             }
         }
