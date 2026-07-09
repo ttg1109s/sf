@@ -8,6 +8,7 @@
      --font-size: 20px;
      --inner-core-color: white;
      --progress: 0;
+     --taskbar-height: 50px; /* phải khớp height #task-manager trong taskbar.css - dùng để tính chiều cao window/app-show fullscreen trên mobile */
 }
 
 body {

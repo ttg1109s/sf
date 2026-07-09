@@ -3,8 +3,8 @@
     ========================================================================== */
 #task-manager {
      z-index: 1000;
-     height: 50px;
-     max-height: 50px;
+     height: var(--taskbar-height);
+     max-height: var(--taskbar-height);
      overflow: hidden;
 }
 
