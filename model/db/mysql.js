@@ -158,7 +158,7 @@ class MySQL {
         if (!this.#checkTable(tableName)) return false;
 
         const [start, len] = limit;
-        if (len < start) {
+        if (start < 0 || len < 0) {
             throw new Error('MySQL: Invalid limit parameters.');
         }
 
