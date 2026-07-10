@@ -10,7 +10,7 @@ mouse
 
         if (responsive.isMobile) {
             event.stopPropagation();
-            objDOM.toolListID.removeClass('mobile-open'); // chọn xong tự đóng dropdown
+            responsive.closeAllPopups(); // chọn xong tự đóng dropdown
         }
     });
 
@@ -21,16 +21,8 @@ mouse
     .where('#toolsToggle')
     .do((event) => {
         event.stopPropagation();
-        landUI.closeActionMenu(); // tránh 2 popup mở cùng lúc
-        objDOM.toolListID.toggleClass('mobile-open');
-    });
-
-// Chạm ra ngoài dropdown (ở bất kỳ đâu khác trong body) -> đóng dropdown
-mouse
-    .hand('click')
-    .where('body')
-    .do(() => {
-        if (!responsive.isMobile) return;
-        objDOM.toolListID.removeClass('mobile-open');
+        const willOpen = !objDOM.toolListID.hasClass('mobile-open');
+        responsive.closeAllPopups(); // đóng mọi popup khác trước, kể cả toolsList đang mở
+        if (willOpen) objDOM.toolListID.addClass('mobile-open');
     });
 

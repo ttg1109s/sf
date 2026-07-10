@@ -78,7 +78,7 @@ mouse
     .do(function (event) {
         if (!responsive.isMobile) return;
         event.stopPropagation();
-        objDOM.toolListID.removeClass('mobile-open'); // tránh 2 popup mở cùng lúc
+        responsive.closeAllPopups();
         landUI.openActionMenu($(this).index(), mouse.position(event));
     });
 
@@ -99,15 +99,6 @@ mouse
         event.stopPropagation();
         driver.on('userSelectingLand', { index: landUI.actionMenuIndex });
         driver.on('userFarmingAction', { index: landUI.actionMenuIndex });
-        landUI.closeActionMenu();
-    });
-
-// Chạm ra ngoài menu (ở bất kỳ đâu khác trong body) -> đóng menu
-mouse
-    .hand('click')
-    .where('body')
-    .do(() => {
-        if (!responsive.isMobile) return;
         landUI.closeActionMenu();
     });
 

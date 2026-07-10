@@ -1,7 +1,10 @@
 /* Sự kiện chuột: thanh cuộn tùy chỉnh ============================================================= */
 
+// Lưu ý: drag() window (mouse.js) chạy trên pointerdown kể từ khi hợp nhất Pointer Events.
+// pointerdown bắn TRƯỚC mousedown, nên phải stopPropagation() ngay ở pointerdown - nếu chỉ chặn ở
+// mousedown như trước, window đã kịp bắt đầu kéo trước khi mousedown chạy tới.
 mouse
-    .hand('mousedown')
+    .hand('pointerdown')
     .where('.scrollbar input[type="range"]')
     .do((event) => {
         event.stopPropagation();
