@@ -89,4 +89,32 @@
     #task-manager .manage {
          flex-wrap: nowrap;
     }
+
+    /* --- Mục 4e: landArea (lưới 750x375, 5x3 ô) không vừa màn hình dọc điện thoại.
+       Chuyển thành 1 dải cuộn ngang có snap - vuốt để xem tiếp, không cần nút prev/next.
+       Giữ DOM phẳng (không bọc div theo hàng) vì mouse.index()/$(this).index() ở
+       land-events.js tính theo vị trí sibling trong #landArea - bọc thêm div sẽ làm sai
+       index gửi lên userSelectingLand/userFarmingAction. --- */
+    #landArea {
+         left: 0;
+         transform: translateY(-50%); /* bỏ dịch ngang -50% gốc (tính theo 750px cố định), chỉ giữ căn giữa dọc */
+         width: 100%;
+         max-width: 100vw;
+         height: auto;
+         flex-wrap: nowrap;
+         justify-content: flex-start;
+         overflow-x: auto;
+         overflow-y: hidden;
+         scroll-snap-type: x mandatory;
+         -webkit-overflow-scrolling: touch;
+    }
+
+    #landArea .items {
+         flex-shrink: 0;
+         scroll-snap-align: start;
+    }
+
+    #landArea::-webkit-scrollbar {
+         display: none; /* ẩn thanh cuộn ngang, vuốt vẫn hoạt động bình thường */
+    }
 }
