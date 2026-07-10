@@ -78,6 +78,7 @@ mouse
     .do(function (event) {
         if (!responsive.isMobile) return;
         event.stopPropagation();
+        objDOM.toolListID.removeClass('mobile-open'); // tránh 2 popup mở cùng lúc
         landUI.openActionMenu($(this).index(), mouse.position(event));
     });
 
