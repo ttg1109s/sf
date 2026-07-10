@@ -47,6 +47,16 @@ class Responsive {
     notify() {
         this.listeners.forEach((cb) => cb(this.isMobile));
     }
+
+    // Đóng tất cả popup mobile (menu land, dropdown tool, context menu bag).
+    // Gọi trước khi mở 1 popup mới, và khi chạm ra ngoài - tránh nhiều popup chồng nhau.
+    closeAllPopups() {
+        if (typeof landUI !== 'undefined') landUI.closeActionMenu();
+        if (typeof objDOM !== 'undefined') {
+            objDOM.toolListID.removeClass('mobile-open');
+            objDOM.bagContextMenu.addClass('d-none');
+        }
+    }
 }
 
 const responsive = new Responsive();
