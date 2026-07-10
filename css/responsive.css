@@ -49,7 +49,7 @@
 
     /* --- Mục 4c: toolsList thu gọn thành 1 nút, bấm dropdown lên trên --- */
     #toolsList {
-         display: none; /* mặc định đóng, JS thêm class mobile-open khi bấm #toolsToggle */
+         display: none !important; /* đè .d-flex có sẵn trong markup (Bootstrap utility luôn !important) */
     }
 
     #toolsToggle {
@@ -101,8 +101,8 @@
          width: 100%;
          max-width: 100vw;
          height: auto;
-         flex-wrap: nowrap;
-         justify-content: flex-start;
+         flex-wrap: nowrap !important; /* đè .flex-wrap có sẵn trong markup (Bootstrap utility luôn !important) */
+         justify-content: flex-start !important; /* đè .justify-content-center có sẵn trong markup, cùng lý do */
          overflow-x: auto;
          overflow-y: hidden;
          scroll-snap-type: x mandatory;
