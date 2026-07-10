@@ -21,14 +21,7 @@ mouse.hand('click')
     .where('#app-show .app-list .items')
     .do(function () {
         const windowName = $(this).attr('name');
-        const windowSelector = objDOM.window.filter(`[name="${windowName}"]`);
-        if (mouse.window[windowName] || !windowSelector.length) return false;
-        mouse.window[windowName] = true;
-        if (windowName === 'weather') WUI.scroll = true;
-        if (windowName === 'nation-products-center') driver.on('userOpenProducts');
-        windowSelector.show();
-        windowSelector.removeClass('minimize d-none');
-        windowSelector.addClass('maximize');
+        if (!mouse.openWindow(windowName)) return false;
         $('#window-app .app-show').trigger('click');
     });
 
