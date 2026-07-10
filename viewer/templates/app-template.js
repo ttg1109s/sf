@@ -69,6 +69,10 @@ const APP_TEMPLATE = `
                 <div class="items" state="locked"></div>
                 <div class="items" state="locked"></div>
             </div>
+            <div id="landActionMenu" class="position-absolute d-none">
+                <div class="items action-view">Xem</div>
+                <div class="items action-farm d-none">Canh tác</div>
+            </div>
         </div>
         <div id="landInfo" class="window" name="land-details">
             <div class="header">
