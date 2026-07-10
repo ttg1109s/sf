@@ -1,0 +1,44 @@
+/* ==========================================================================
+    Responsive - Mobile Overrides
+    Chỉ áp dụng qua @media, không sửa style desktop ở các file gốc.
+    Load sau cùng trong index.html để thắng cascade; dùng !important vì phải
+    override các rule theo ID (#landInfo, #weather, #bag, #products...) có
+    độ đặc trưng cao hơn class .window/.window-app-show.
+    ========================================================================== */
+
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+
+    /* --- Mục 4a: window fullscreen, trừ chiều cao taskbar --- */
+    .window {
+         position: fixed !important;
+         top: 0 !important;
+         left: 0 !important;
+         right: 0 !important;
+         bottom: var(--taskbar-height) !important;
+         width: 100% !important;
+         height: calc(100dvh - var(--taskbar-height)) !important;
+         max-width: 100% !important;
+         max-height: none !important;
+         margin: 0 !important;
+         border-radius: 0 !important;
+    }
+
+    .window .header {
+         border-radius: 0;
+    }
+
+    /* --- Mục 4b: app launcher fullscreen tương tự window ---
+       Lưu ý: "bottom" và "opacity" vẫn do JS (.animate trong window-events.js)
+       điều khiển để giữ animation trượt lên/xuống, không override ở đây. */
+    #app-show {
+         left: 0 !important;
+         width: 100% !important;
+         height: calc(100dvh - var(--taskbar-height)) !important;
+         border-radius: 0 !important;
+         border: none !important;
+    }
+
+    #app-show .overlay {
+         border-radius: 0;
+    }
+}
