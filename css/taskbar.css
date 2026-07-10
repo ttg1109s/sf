@@ -27,3 +27,9 @@
      font-size: 36px;
 }
 
+.calendar-time {
+     min-width: 5.5em; /* tránh đồng hồ đổi độ rộng theo số giờ/phút làm dịch icon tool bên cạnh */
+     text-align: right;
+     font-variant-numeric: tabular-nums;
+}
+
