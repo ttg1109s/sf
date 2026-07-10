@@ -12,8 +12,10 @@ class Mouse {
         this.appShow = false;
         this.appShowing = false;
         this.appShowHeight = 0;
-        // Desktop: land-details/weather là panel nhỏ hiển thị sẵn.
-        // Mobile: window là fullscreen, không có window nào mở mặc định.
+        // Desktop: land-details/weather là panel nhỏ hiển thị sẵn (không có class d-none trong template).
+        // Mobile: window là fullscreen, không có window nào mở mặc định - phần ẩn DOM thực tế
+        // (objDOM.window.addClass('d-none')) do responsive.hideDefaultWindows() phụ trách, chạy
+        // ngay lúc responsive.js khởi tạo (sớm hơn Mouse) - ở đây chỉ cần đồng bộ lại state tracking.
         this.window = (typeof responsive !== 'undefined' && responsive.isMobile)
             ? {}
             : {

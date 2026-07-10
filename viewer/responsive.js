@@ -25,10 +25,24 @@ class Responsive {
         $('body').toggleClass('is-mobile', this.isMobile);
 
         if (wasMobile !== this.isMobile) {
+            if (this.isMobile) this.hideDefaultWindows();
             this.notify();
         }
 
         return this.isMobile;
+    }
+
+    // Mobile: window là fullscreen, không có window nào mở mặc định (#weather/#landInfo không có
+    // d-none sẵn trong template, khác #bag/#products). Gọi mỗi khi CHUYỂN SANG mobile (kể cả lần
+    // check() đầu tiên lúc khởi tạo) - không chỉ 1 lần trong Mouse constructor - để không bị lỡ nếu
+    // responsive.isMobile chưa kịp đúng ngay thời điểm Mouse khởi tạo.
+    hideDefaultWindows() {
+        if (typeof objDOM !== 'undefined' && objDOM.window) {
+            objDOM.window.addClass('d-none');
+        }
+        if (typeof mouse !== 'undefined') {
+            mouse.window = {};
+        }
     }
 
     bindChange() {
@@ -48,10 +62,9 @@ class Responsive {
         this.listeners.forEach((cb) => cb(this.isMobile));
     }
 
-    // Đóng tất cả popup mobile (menu land, dropdown tool, context menu bag).
+    // Đóng tất cả popup mobile (dropdown tool, context menu bag).
     // Gọi trước khi mở 1 popup mới, và khi chạm ra ngoài - tránh nhiều popup chồng nhau.
     closeAllPopups() {
-        if (typeof landUI !== 'undefined') landUI.closeActionMenu();
         if (typeof objDOM !== 'undefined') {
             objDOM.toolListID.removeClass('mobile-open');
             objDOM.bagContextMenu.addClass('d-none');

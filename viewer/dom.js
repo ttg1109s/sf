@@ -14,14 +14,12 @@ const objDOM = {
     calendarHumidity: $("#weather .weather-footer .humidity .icon-before"),
     calendarTemperatureAverage: $("#weather .temperature-average .icon-before"),
 
-    mainID: $("#main"),
     areaLandID: $("#landArea"),
     areaLandItems: $("#landArea .items"),
     toolLandID: $("#toolsLand"),
 
-    landActionMenuID: $("#landActionMenu"),
-    landActionView: $("#landActionMenu .action-view"),
-    landActionFarm: $("#landActionMenu .action-farm"),
+    landNavPrev: $("#landNavPrev"),
+    landNavNext: $("#landNavNext"),
 
     toolListID: $("#toolsList"),
     toolListItems: $("#toolsList .items-tools"),
