@@ -71,34 +71,40 @@ mouse
     });
 
 
-// (Mobile) Chạm vào ô đất -> hiện menu "Xem" / "Canh tác" thay cho luồng hover ========================
+// (Mobile) Layout mới: 1 ô land đang xem chiếm 1/3 màn trên cùng, land-details luôn mở ở 2/3 dưới
+// (xem responsive.css + landUI.showMobileCurrent/stepMobileCurrent). Không còn menu popup Xem/Canh
+// tác - chạm vào ô đang xem = canh tác trực tiếp (tương đương mouseup desktop); điều hướng đổi ô
+// bằng nút prev/next thay vì vuốt.
 mouse
     .hand('click')
-    .where('#landArea .items')
-    .do(function (event) {
+    .where('#landArea .items.current-mobile')
+    .do(function () {
         if (!responsive.isMobile) return;
-        event.stopPropagation();
+        const index = $(this).index();
         responsive.closeAllPopups();
-        landUI.openActionMenu($(this).index(), mouse.position(event));
+        driver.on('userSelectingLand', { index });
+        driver.on('userFarmingAction', { index });
     });
 
 mouse
     .hand('click')
-    .where('#landActionMenu .action-view')
-    .do((event) => {
-        event.stopPropagation();
-        driver.on('userSelectingLand', { index: landUI.actionMenuIndex });
-        mouse.openWindow('land-details');
-        landUI.closeActionMenu();
+    .where('#landNavPrev')
+    .do(() => {
+        if (!responsive.isMobile) return;
+        const index = landUI.stepMobileCurrent(-1);
+        if (index === -1) return;
+        responsive.closeAllPopups();
+        driver.on('userSelectingLand', { index });
     });
 
 mouse
     .hand('click')
-    .where('#landActionMenu .action-farm')
-    .do((event) => {
-        event.stopPropagation();
-        driver.on('userSelectingLand', { index: landUI.actionMenuIndex });
-        driver.on('userFarmingAction', { index: landUI.actionMenuIndex });
-        landUI.closeActionMenu();
+    .where('#landNavNext')
+    .do(() => {
+        if (!responsive.isMobile) return;
+        const index = landUI.stepMobileCurrent(1);
+        if (index === -1) return;
+        responsive.closeAllPopups();
+        driver.on('userSelectingLand', { index });
     });
 

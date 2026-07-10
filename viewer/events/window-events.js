@@ -12,11 +12,6 @@ mouse.hand('click')
         mouse.window[windowName] = false;
         if (windowName === 'weather') WUI.scroll = false;
         if (windowName === 'nation-products-center') productUI.delete();
-        // Mobile không có mouseleave để tự kích hoạt reset "N/A" như desktop -
-        // đóng window land-details là lúc tương đương "rời khỏi" ô đất đang xem.
-        if (windowName === 'land-details' && responsive.isMobile) {
-            driver.on('userDeselectLand', { index: registry.control.landID });
-        }
         windowSelector.removeClass('maximize');
         windowSelector.addClass('minimize');
         setTimeout(() => { windowSelector.hide(); }, 200);
