@@ -12,10 +12,14 @@ class Mouse {
         this.appShow = false;
         this.appShowing = false;
         this.appShowHeight = 0;
-        this.window = {
-            'land-details': true,
-            'weather': true,
-        }
+        // Desktop: land-details/weather là panel nhỏ hiển thị sẵn.
+        // Mobile: window là fullscreen, không có window nào mở mặc định.
+        this.window = (typeof responsive !== 'undefined' && responsive.isMobile)
+            ? {}
+            : {
+                'land-details': true,
+                'weather': true,
+            };
 
         // Các thông số tùy chỉnh cho drag với giá trị mặc định
         this.dragConfig = {
@@ -208,6 +212,20 @@ class Mouse {
         if (this.dragTarget) {
             this.dragTarget = null;
         }
+    }
+
+    openWindow(windowName) {
+        const windowSelector = objDOM.window.filter(`[name="${windowName}"]`);
+        if (this.window[windowName] || !windowSelector.length) return false;
+
+        this.window[windowName] = true;
+        if (windowName === 'weather') WUI.scroll = true;
+        if (windowName === 'nation-products-center') driver.on('userOpenProducts');
+
+        windowSelector.show();
+        windowSelector.removeClass('minimize d-none');
+        windowSelector.addClass('maximize');
+        return true;
     }
 
     index(event) {

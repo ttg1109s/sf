@@ -2,6 +2,10 @@
 
 class LandUI {
 
+    constructor() {
+        this.actionMenuIndex = -1; // Ô đất đang mở menu "Xem/Canh tác" trên mobile, -1 = đang đóng
+    }
+
     get(data = []) {
         data.forEach(function (value, index) {
             objDOM.areaLandItems.eq(index).attr('state', value.state.name);
@@ -78,6 +82,27 @@ class LandUI {
     stateUpdate(index, newState) {
         objDOM.areaLandID.find('.items').eq(index).attr('state', newState);
         return true;
+    }
+
+    openActionMenu(index, position) {
+        this.actionMenuIndex = index;
+
+        objDOM.landActionFarm.toggleClass('d-none', !registry.control.toolSelected);
+        objDOM.landActionMenuID.removeClass('d-none');
+
+        const mainOffset = objDOM.mainID.offset();
+        const menuWidth = objDOM.landActionMenuID.outerWidth();
+        const menuHeight = objDOM.landActionMenuID.outerHeight();
+
+        objDOM.landActionMenuID.css({
+            left: position.x - mainOffset.left - (menuWidth / 2),
+            top: position.y - mainOffset.top - menuHeight - 12, // hiện phía trên điểm chạm, tránh ngón tay che menu
+        });
+    }
+
+    closeActionMenu() {
+        this.actionMenuIndex = -1;
+        objDOM.landActionMenuID.addClass('d-none');
     }
 }
 
