@@ -69,10 +69,8 @@ const APP_TEMPLATE = `
                 <div class="items" state="locked"></div>
                 <div class="items" state="locked"></div>
             </div>
-            <div id="landActionMenu" class="position-absolute d-none">
-                <div class="items action-view">Xem</div>
-                <div class="items action-farm d-none">Canh tác</div>
-            </div>
+            <div id="landNavPrev" class="d-none"></div>
+            <div id="landNavNext" class="d-none"></div>
         </div>
         <div id="landInfo" class="window" name="land-details">
             <div class="header">
@@ -186,7 +184,7 @@ const APP_TEMPLATE = `
                 <div class="equipments">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <div class="icon-before eqp me-2">Equipments</div>
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between equipments-row">
                             <div class="items" status="empty" name="shovel"></div>
                             <div class="items" status="empty" name="sickle"></div>
                             <div class="items" status="empty" name="fertilizer"></div>
