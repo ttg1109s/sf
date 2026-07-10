@@ -176,6 +176,13 @@ class driverControl {
                     limit: [registry.page.land * 5, 5]
                 })
             );
+
+            // Mobile: layout mới luôn cần 1 ô "đang xem" - chọn sẵn ô đầu tiên đã mở khoá.
+            // userSelectingLand tái dùng nguyên cơ chế live-update (Loop interval) đã có sẵn.
+            if (responsive.isMobile) {
+                const index = landUI.initMobileCurrent();
+                if (index !== -1) driver.on('userSelectingLand', { index });
+            }
         },
 
         landDataUpdate(payload) {
