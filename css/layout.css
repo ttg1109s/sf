@@ -75,3 +75,26 @@
      display: none;
 }
 
+#landActionMenu {
+     z-index: 15;
+     min-width: 140px;
+     overflow: hidden;
+     border-radius: 12px;
+     background-color: #ffffff;
+     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#landActionMenu .items {
+     padding: 0.7rem 1rem;
+     text-align: center;
+     cursor: pointer;
+}
+
+#landActionMenu .items:active {
+     background-color: #eeeeee;
+}
+
+#landActionMenu .items + .items {
+     border-top: 1px solid #eeeeee;
+}
+
