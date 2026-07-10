@@ -39,7 +39,10 @@ mouse.hand('click')
             height = -100 + '%';
         } else {
             mouse.appShow = true;
-            height = 60 + 'px';
+            // Mobile: app-show fullscreen, phải nằm sát taskbar (không còn khoảng hở như desktop)
+            height = responsive.isMobile
+                ? getComputedStyle(document.documentElement).getPropertyValue('--taskbar-height').trim()
+                : 60 + 'px';
             opacity = 1;
         }
 
