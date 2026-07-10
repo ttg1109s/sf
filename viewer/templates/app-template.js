@@ -323,6 +323,7 @@ const APP_TEMPLATE = `
                 <div class="items-tools bucket"></div>
                 <div class="items-tools pesticide"></div>
             </div>
+            <div id="toolsToggle"></div>
             <div id="functions" class="d-flex align-items-center">
                 <div id="alert" class="icon-before"></div>
                 <div id="reminder" class="icon-before"></div>
