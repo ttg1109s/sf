@@ -263,6 +263,16 @@ const APP_TEMPLATE = `
             </div>
         </div>
 
+        <div id="stock" class="window d-none" name="stock">
+            <div class="header">
+                <div class="icon-before app-title" name="stock">Harvest Stock</div>
+                <div class="icon-before close"></div>
+            </div>
+            <div class="body p-3">
+                <div class="stock-list"></div>
+            </div>
+        </div>
+
         <div id="products" class="window d-none" name="nation-products-center">
             <div class="header">
                 <div class="icon-before app-title" name="nation-products-center">Nantion Products Center</div>
