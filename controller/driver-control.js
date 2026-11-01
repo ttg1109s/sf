@@ -133,8 +133,8 @@ class driverControl {
             if (!l.setIndex(registry.control.landID)) return false;
 
             registry.control.userFarming = true;
-
-            const itemInfo = registry.equipments[registry.control.toolName];
+            try {
+                const itemInfo = registry.equipments[registry.control.toolName];
 
             console.log('Action:', registry.control.toolName);
 
@@ -163,9 +163,11 @@ class driverControl {
                 action: registry.control.toolName,
             };
 
-            driver.on('callingToFarmer', { knowledge: knowledge, self: self, itemInfo: itemInfo });
 
-            registry.control.userFarming = false;
+                driver.on('callingToFarmer', { knowledge: knowledge, self: self, itemInfo: itemInfo });
+            } finally {
+                registry.control.userFarming = false;
+            }
 
         },
 
