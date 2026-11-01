@@ -191,7 +191,7 @@ class Weather {
         if (this.#setRain) {
            for (let i = 0; i < this.#listRain.length; i++) {
                 if (this.#listRain[i]) {
-                    const tempDrop = (this.#listRain[i] / this.#fallingMiMax[1]) * fb.random.int(1, 4);
+                    const tempDrop = (this.#listFalling[i] / this.#fallingMiMax[1]) * fb.random.int(1, 4);
                     this.#listTemp[i] -= tempDrop;
                 }
             }

@@ -41,6 +41,9 @@ const loopEvent = {
             console.log('New Year:', currentDate[0]);
         }
 
+        const seasonName = new Weather({ day: currentDate[2] }).getSeason();
+        if (seasonName) registry.system.season = seasonName;
+
         const hours = currentDate[3] % 12 || 12;
         const half = currentDate[3] >= 12 ? 'PM' : 'AM';
 

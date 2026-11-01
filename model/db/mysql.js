@@ -170,10 +170,6 @@ class MySQL {
 
         for (let i = 0; i < index.length; i++) {
 
-            if (i < start) continue;
-
-            if (i >= start + len && start + len > 0) break;
-
             if (table[index[i]] === undefined) continue;
 
             let record = fb.array.clone(table[index[i]]);
@@ -200,6 +196,10 @@ class MySQL {
             fb.array.sortBy(records, direction, column);
         }
 
+        if (start > 0 || len > 0) {
+            records = len > 0 ? records.slice(start, start + len) : records.slice(start);
+        }
+
         return {
             time: performance.now() - startTime,
             data: fb.array.clone(records),
@@ -224,6 +224,8 @@ class MySQL {
         if (key.length === 0) {
             throw new Error('MySQL: No data provided to update.');
         }
+
+        this.#checkColumns(tableName, set);
 
         if (where && !this.#whereFilter(record, where)) {
             return false;

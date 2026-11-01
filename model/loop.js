@@ -24,9 +24,12 @@ class Loop {
         this.intervalRun = setInterval(() => {
             if (this.block) return;
             this.block = true;
-            this.#count();
-            this.callback();
-            this.block = false;
+            try {
+                this.#count();
+                this.callback();
+            } finally {
+                this.block = false;
+            }
         }, this.time);
 
     }
@@ -37,15 +40,17 @@ class Loop {
             this.stopped = true;
             return;
         }
-        this.callback();
-
-        setTimeout(() => {
-            if (this.stop) {
-                this.stopped = true;
-                return;
-            }
-            this.#timeout();
-        }, this.time);
+        try {
+            this.callback();
+        } finally {
+            setTimeout(() => {
+                if (this.stop) {
+                    this.stopped = true;
+                    return;
+                }
+                this.#timeout();
+            }, this.time);
+        }
 
     }
 
