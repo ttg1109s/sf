@@ -172,7 +172,7 @@ class LandDynamicData {
             }
         }
 
-        if (oldState !== result.update?.state?.code) {
+        if (result.update && oldState !== result.update.state.code) {
             result.stateChanged = true;
         }
 
