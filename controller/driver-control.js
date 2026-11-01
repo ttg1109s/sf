@@ -277,18 +277,22 @@ class driverControl {
             if (!payload) return false;
             const result = EconomySystem.buy(payload.group, payload.itemID, payload.quantity ?? 1);
             if (result.ok) driver.on('bagLoad');
+            if (typeof playerStatusUI !== 'undefined') playerStatusUI.render();
             return result;
         },
 
         userAllocateAttribute(payload) {
             if (!payload) return false;
-            return ProgressionSystem.allocate(registry.player, payload.attribute, payload.points ?? 1);
+            const result = ProgressionSystem.allocate(registry.player, payload.attribute, payload.points ?? 1);
+            if (result && typeof playerStatusUI !== 'undefined') playerStatusUI.render();
+            return result;
         },
 
         userSellStock(payload) {
             if (!payload) return false;
             const result = EconomySystem.sellStock(payload.index, payload.quantity ?? null);
             if (result.ok && typeof stockUI !== 'undefined') stockUI.render(s.load());
+            if (result.ok && typeof playerStatusUI !== 'undefined') playerStatusUI.render();
             return result;
         },
 
@@ -342,6 +346,7 @@ class driverControl {
                     ? Math.max(0, currentArea - previousArea)
                     : Math.max(1, previousArea);
                 ProgressionSystem.award(registry.player, (xpByAction[payload.self.action] || 0.05) * workedArea, payload.self.action);
+                if (typeof playerStatusUI !== 'undefined') playerStatusUI.render();
             }
             if (report.complete) {
                 const callToDriver = {
