@@ -2,7 +2,7 @@
 
 mouse
     .hand('click')
-    .where('#products .body .tab-content .tab-content-items .items')
+    .where('#products .body .tab-content .tab-content-items .items > .d-flex')
     .do(function () {
         const groupName = $(this).attr('name');
         driver.on('userChoiceGroupProducts', { groups: groupName });
