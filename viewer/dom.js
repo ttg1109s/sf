@@ -18,8 +18,6 @@ const objDOM = {
     areaLandItems: $("#landArea .items"),
     toolLandID: $("#toolsLand"),
 
-    landNavPrev: $("#landNavPrev"),
-    landNavNext: $("#landNavNext"),
 
     toolListID: $("#toolsList"),
     toolListItems: $("#toolsList .items-tools"),
