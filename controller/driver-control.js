@@ -272,6 +272,19 @@ class driverControl {
             }
         },
 
+        // Economy events. UI can call these through the central driver.
+        userBuyProduct(payload) {
+            if (!payload) return false;
+            const result = EconomySystem.buy(payload.group, payload.itemID, payload.quantity ?? 1);
+            if (result.ok) driver.on('bagLoad');
+            return result;
+        },
+
+        userSellStock(payload) {
+            if (!payload) return false;
+            return EconomySystem.sellStock(payload.index, payload.quantity ?? null);
+        },
+
         // Game-related events
         newGame() {
             registry.system.currentDate = [1, 1, 1, 0, 0];
@@ -307,6 +320,11 @@ class driverControl {
 
             const w = new Farmer({ knowledge: payload.knowledge, self: payload.self });
             const report = w.worker();
+            if (report.complete && payload.self.identity === 'user' && typeof ProgressionSystem !== 'undefined') {
+                const xpByAction = { shovel: 1, fertilizer: 2, seed: 2, watercan: 1, bucket: 1, pesticide: 3, sickle: 5 };
+                const area = Math.max(1, Number(payload.knowledge.land?.slot?.cur) || 1);
+                ProgressionSystem.award(registry.player, Math.max(1, Math.ceil((xpByAction[payload.self.action] || 1) * Math.sqrt(area))), payload.self.action);
+            }
             if (report.complete) {
                 const callToDriver = {
                     place() {
