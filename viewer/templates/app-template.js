@@ -345,7 +345,10 @@ const APP_TEMPLATE = `
                     <div class="save icon-before align-items-center">Save Data</div>
                     <div class="sync icon-before"></div>
                 </div>
-                
+                <div id="player-status" class="player-status mt-2">
+                    <div class="player-summary"></div>
+                    <div class="player-attributes"></div>
+                </div>
             </div>
         </div>
         <div class="app-list p-3 px-5 d-flex flex-wrap justify-content-start">
