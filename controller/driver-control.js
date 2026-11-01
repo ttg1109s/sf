@@ -335,9 +335,13 @@ class driverControl {
             const report = w.worker();
             if (report.complete && payload.self.identity === 'user' && typeof ProgressionSystem !== 'undefined') {
                 // XP scales with the amount of meaningful work, not click count.
-                const xpByAction = { shovel: 0.05, fertilizer: 0.2, seed: 0.2, watercan: 0.05, bucket: 0.05, pesticide: 0.1, sickle: 0.5 };
-                const area = Math.max(1, Number(payload.knowledge.land?.slot?.cur) || 1);
-                ProgressionSystem.award(registry.player, (xpByAction[payload.self.action] || 0.05) * area, payload.self.action);
+                const xpByAction = { shovel: 1, fertilizer: 0.2, seed: 0.2, watercan: 0.05, bucket: 0.05, pesticide: 0.1, sickle: 0.5 };
+                const previousArea = Number(payload.knowledge.land?.slot?.cur) || 0;
+                const currentArea = Number(report.update?.set?.slot?.cur ?? previousArea) || previousArea;
+                const workedArea = payload.self.action === 'shovel'
+                    ? Math.max(0, currentArea - previousArea)
+                    : Math.max(1, previousArea);
+                ProgressionSystem.award(registry.player, (xpByAction[payload.self.action] || 0.05) * workedArea, payload.self.action);
             }
             if (report.complete) {
                 const callToDriver = {
