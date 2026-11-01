@@ -64,58 +64,51 @@ class Install {
         const mapItem = [
             {
                 groups: 'shovel',
-                id: 1, quantity: 100,
+                id: 1, quantity: 20,
                 name: p.item('shovel', 1).name,
                 level: p.item('shovel', 1)?.reqLevel ?? 1
             }, 
             {
                 groups: 'sickle',
                 id: 1,
-                quantity: 100,
+                quantity: 20,
                 name: p.item('sickle', 1).name,
                 level: p.item('sickle', 1)?.reqLevel ?? 1
             },
             {
                 groups: 'seed',
                 id: 1,
-                quantity: 100,
+                quantity: 30,
                 name: p.item('seed', 1).name,
                 level: p.item('seed', 1)?.reqLevel ?? 1
             },
             {
                 groups: 'fertilizer',
                 id: 1,
-                quantity: 100,
+                quantity: 15,
                 name: p.item('fertilizer', 1).name,
                 level: p.item('fertilizer', 1)?.reqLevel ?? 1
             },
             {
                 groups: 'watercan',
                 id: 1,
-                quantity: 100,
+                quantity: 20,
                 name: p.item('watercan', 1).name,
                 level: p.item('watercan', 1)?.reqLevel ?? 1
             },
             {
                 groups: 'bucket',
                 id: 1,
-                quantity: 100,
+                quantity: 20,
                 name: p.item('bucket', 1).name,
                 level: p.item('bucket', 1)?.reqLevel ?? 1
             },
             {
                 groups: 'pesticide',
                 id: 1,
-                quantity: 100,
+                quantity: 10,
                 name: p.item('pesticide', 1).name,
                 level: p.item('pesticide', 1)?.reqLevel ?? 1
-            },
-            {
-                groups: 'sickle',
-                id: 9,
-                quantity: 10099,
-                name: p.item('sickle', 9).name,
-                level: p.item('sickle', 9)?.reqLevel ?? 1
             },
         ];
 
