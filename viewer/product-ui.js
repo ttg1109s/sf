@@ -23,9 +23,10 @@ class ProductUI {
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex justify-content-between w-75 align-items-center">
                         <div class="name" id="${data.id}">${data.name}</div>
+                        <div class="price">${Number(data.price || 0).toLocaleString()} VND</div>
                     </div>
                     <div class="action d-flex justify-content-between align-items-center">
-                        <div class="add-cart icon-before"></div>
+                        <button type="button" class="add-cart">Buy</button>
                     </div>
                 </div>
             </div>`;
