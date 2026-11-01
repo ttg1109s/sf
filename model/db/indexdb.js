@@ -37,8 +37,10 @@ class IndexDB {
             const store = transaction.objectStore(storeName);
             const request = store.put(data);
 
-            request.onsuccess = () => resolve(`Data saved successfully: ${JSON.stringify(data)}`);
-            request.onerror = (event) => reject(`Failed to save data: ${event.target.errorCode}`);
+            transaction.oncomplete = () => resolve(`Data saved successfully: ${JSON.stringify(data)}`);
+            request.onerror = () => reject(`Failed to save data: ${request.error?.message || 'request error'}`);
+            transaction.onerror = () => reject(`Failed to save transaction: ${transaction.error?.message || 'transaction error'}`);
+            transaction.onabort = () => reject(`Save transaction aborted: ${transaction.error?.message || 'transaction aborted'}`);
         });
     }
 
@@ -73,8 +75,10 @@ class IndexDB {
             const store = transaction.objectStore(storeName);
             const request = store.delete(key);
 
-            request.onsuccess = () => resolve(`Data deleted successfully: ${key}`);
-            request.onerror = (event) => reject(`Failed to delete data: ${event.target.errorCode}`);
+            transaction.oncomplete = () => resolve(`Data deleted successfully: ${key}`);
+            request.onerror = () => reject(`Failed to delete data: ${request.error?.message || 'request error'}`);
+            transaction.onerror = () => reject(`Failed to delete transaction: ${transaction.error?.message || 'transaction error'}`);
+            transaction.onabort = () => reject(`Delete transaction aborted: ${transaction.error?.message || 'transaction aborted'}`);
         });
     }
 
@@ -85,8 +89,10 @@ class IndexDB {
             const store = transaction.objectStore(storeName);
             const request = store.clear();
 
-            request.onsuccess = () => resolve(`All data cleared in store: ${storeName}`);
-            request.onerror = (event) => reject(`Failed to clear data: ${event.target.errorCode}`);
+            transaction.oncomplete = () => resolve(`All data cleared in store: ${storeName}`);
+            request.onerror = () => reject(`Failed to clear data: ${request.error?.message || 'request error'}`);
+            transaction.onerror = () => reject(`Failed to clear transaction: ${transaction.error?.message || 'transaction error'}`);
+            transaction.onabort = () => reject(`Clear transaction aborted: ${transaction.error?.message || 'transaction aborted'}`);
         });
     }
 }
