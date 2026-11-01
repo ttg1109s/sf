@@ -255,10 +255,16 @@ class Farmer {
 
         if (this.#land.state.code === 4 && this.#action === 'sickle') {
 
+            // Tool.#sickle already applies sickle effectiveness and natural loss.
+            // Apply pest damage to that result, not to the pre-harvest land yield.
+            const harvestedByTool = Math.max(0, Number(this.#report.update.set?.yield) || 0);
+            const pestFactor = fb.calc.scl(5 - (this.#land.pest || 0), 0, 5, 0.2, 1);
+            const harvested = Math.max(0, Math.floor(harvestedByTool * pestFactor));
+
             this.#report.update.pack = {
                 seedID: this.#land.plantID.code,
                 fertilizerID: this.#land.fertilizerID,
-                yield: fb.calc.scl(5 - this.#land.pest, 0, 5, this.#land.yield - this.#land.yield * 0.8, this.#land.yield)
+                yield: harvested
             };
 
             this.#report.message.push({ modelSend: 'farmer/pack', messCode: 1 });
