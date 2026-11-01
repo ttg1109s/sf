@@ -22,6 +22,8 @@ mouse.hand('click')
     .do(function () {
         const windowName = $(this).attr('name');
         if (windowName === 'stock') driver.on('userOpenStock');
+        if (typeof playerStatusUI !== 'undefined') playerStatusUI.render();
+        if (windowName === 'stock') driver.on('userOpenStock');
         if (!mouse.openWindow(windowName)) return false;
         $('#window-app .app-show').trigger('click');
     });
@@ -67,3 +69,11 @@ $(window).on('blur', () => {
     WUI.scroll = false; // Ngừng scroll khi tab bị mất focus
     console.log('Tab is inactive, WUI.scroll set to false');
 });
+
+mouse.hand('click')
+    .where('#player-status .attribute-increase')
+    .do(function () {
+        const attribute = $(this).attr('data-attribute');
+        const result = driver.on('userAllocateAttribute', { attribute, points: 1 });
+        if (result) playerStatusUI.render();
+    });
