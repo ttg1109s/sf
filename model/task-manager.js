@@ -71,7 +71,9 @@ class TaskManager {
         if (this.#check(taskName, plan.time, plan.exe, plan.mode, plan.count ?? 0) === false) {
             throw new Error(`Invalid task configuration for task: ${taskName}`);
         }
-        this.plan[taskName] = new Loop(plan.time, plan.exe, plan.mode, plan.count ?? 0);
+        const count = plan.count ?? 0;
+        this.plan[taskName] = { time: plan.time, exe: plan.exe, mode: plan.mode, count };
+        this.tasks[taskName] = new Loop(plan.time, plan.exe, plan.mode, count);
         this.#task(taskName);
     }
 
