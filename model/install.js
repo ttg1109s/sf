@@ -6,7 +6,7 @@
 
 // Tăng số này mỗi khi đổi danh sách cột (createTable) của bất kỳ bảng nào bên dưới.
 // reconcileSchema() dùng số này để biết save cũ có cần đồng bộ lại cột hay không.
-const DB_SCHEMA_VERSION = 1;
+const DB_SCHEMA_VERSION = 2;
 
 class Install {
 
@@ -64,56 +64,56 @@ class Install {
         const mapItem = [
             {
                 groups: 'shovel',
-                id: 1, quantity: 9999,
+                id: 1, quantity: 100,
                 name: p.item('shovel', 1).name,
                 level: p.item('shovel', 1)?.reqLevel ?? 1
             }, 
             {
                 groups: 'sickle',
                 id: 1,
-                quantity: 9999,
+                quantity: 100,
                 name: p.item('sickle', 1).name,
                 level: p.item('sickle', 1)?.reqLevel ?? 1
             },
             {
                 groups: 'seed',
                 id: 1,
-                quantity: 9999,
+                quantity: 100,
                 name: p.item('seed', 1).name,
                 level: p.item('seed', 1)?.reqLevel ?? 1
             },
             {
                 groups: 'fertilizer',
                 id: 1,
-                quantity: 9999,
+                quantity: 100,
                 name: p.item('fertilizer', 1).name,
                 level: p.item('fertilizer', 1)?.reqLevel ?? 1
             },
             {
                 groups: 'watercan',
                 id: 1,
-                quantity: 9999,
+                quantity: 100,
                 name: p.item('watercan', 1).name,
                 level: p.item('watercan', 1)?.reqLevel ?? 1
             },
             {
                 groups: 'bucket',
                 id: 1,
-                quantity: 9999,
+                quantity: 100,
                 name: p.item('bucket', 1).name,
                 level: p.item('bucket', 1)?.reqLevel ?? 1
             },
             {
                 groups: 'pesticide',
                 id: 1,
-                quantity: 9999,
+                quantity: 100,
                 name: p.item('pesticide', 1).name,
                 level: p.item('pesticide', 1)?.reqLevel ?? 1
             },
             {
                 groups: 'sickle',
                 id: 9,
-                quantity: 999999,
+                quantity: 10099,
                 name: p.item('sickle', 9).name,
                 level: p.item('sickle', 9)?.reqLevel ?? 1
             },
@@ -130,7 +130,7 @@ class Install {
             });
         }
 
-        db.createTable('stock', ['start', 'end', 'seed', 'group', 'quality', 'price', 'quantity']);
+        db.createTable('stock', ['start', 'end', 'seed', 'group', 'quality', 'price', 'priceUnit', 'quantityUnit', 'quantity']);
 
     }
 
