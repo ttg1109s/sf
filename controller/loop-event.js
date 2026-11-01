@@ -10,6 +10,10 @@ const loopEvent = {
 
     clock() {
         const now = Date.now();
+        if (typeof EnergySystem !== 'undefined' && registry.player) {
+            EnergySystem.recover(registry.player, Math.max(0, now - (loopEvent.memory.lastEnergyTick || now)), registry.system.gamePaused === true);
+            loopEvent.memory.lastEnergyTick = now;
+        }
         const delta = timer.distance(registry.system.currentTime, now) / 1000;
         const conversion = timer.realToIngame(delta);
         const currentDate = registry.system.currentDate;
