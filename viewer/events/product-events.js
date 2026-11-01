@@ -21,3 +21,13 @@ mouse
         const result = driver.on('userBuyProduct', { group, itemID, quantity: 1 });
         if (result && result.ok) $(this).text('Bought');
     });
+
+
+mouse
+    .hand('click')
+    .where('#stock .sell-stock')
+    .do(function () {
+        const index = Number($(this).attr('data-index'));
+        const result = driver.on('userSellStock', { index });
+        if (result && result.ok) $(this).text('Sold');
+    });
