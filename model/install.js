@@ -33,6 +33,7 @@ class Install {
     #defaultRowFor(tableName) {
         const defaults = {
             land: () => this.#landDefaultRow(),
+            stock: () => ({ priceUnit: 'VND/kg', quantityUnit: 'g' }),
         };
         return defaults[tableName] ? defaults[tableName]() : null;
     }
