@@ -272,6 +272,36 @@ class driverControl {
             }
         },
 
+        // Economy events. UI can call these through the central driver.
+        userBuyProduct(payload) {
+            if (!payload) return false;
+            const result = EconomySystem.buy(payload.group, payload.itemID, payload.quantity ?? 1);
+            if (result.ok) driver.on('bagLoad');
+            if (typeof playerStatusUI !== 'undefined') playerStatusUI.render();
+            return result;
+        },
+
+        userAllocateAttribute(payload) {
+            if (!payload) return false;
+            const result = ProgressionSystem.allocate(registry.player, payload.attribute, payload.points ?? 1);
+            if (result && typeof playerStatusUI !== 'undefined') playerStatusUI.render();
+            return result;
+        },
+
+        userSellStock(payload) {
+            if (!payload) return false;
+            const result = EconomySystem.sellStock(payload.index, payload.quantity ?? null);
+            if (result.ok && typeof stockUI !== 'undefined') stockUI.render(s.load());
+            if (result.ok && typeof playerStatusUI !== 'undefined') playerStatusUI.render();
+            return result;
+        },
+
+        userOpenStock() {
+            if (typeof stockUI === 'undefined') return false;
+            stockUI.render(s.load());
+            return true;
+        },
+
         // Game-related events
         newGame() {
             registry.system.currentDate = [1, 1, 1, 0, 0];
@@ -307,6 +337,17 @@ class driverControl {
 
             const w = new Farmer({ knowledge: payload.knowledge, self: payload.self });
             const report = w.worker();
+            if (report.complete && payload.self.identity === 'user' && typeof ProgressionSystem !== 'undefined') {
+                // XP scales with the amount of meaningful work, not click count.
+                const xpByAction = { shovel: 1, fertilizer: 0.2, seed: 0.2, watercan: 0.05, bucket: 0.05, pesticide: 0.1, sickle: 0.5 };
+                const previousArea = Number(payload.knowledge.land?.slot?.cur) || 0;
+                const currentArea = Number(report.update?.set?.slot?.cur ?? previousArea) || previousArea;
+                const workedArea = payload.self.action === 'shovel'
+                    ? Math.max(0, currentArea - previousArea)
+                    : Math.max(1, previousArea);
+                ProgressionSystem.award(registry.player, (xpByAction[payload.self.action] || 0.05) * workedArea, payload.self.action);
+                if (typeof playerStatusUI !== 'undefined') playerStatusUI.render();
+            }
             if (report.complete) {
                 const callToDriver = {
                     place() {
@@ -375,7 +416,7 @@ class driverControl {
 
     on(event, payload) {
         if (this.#event[event] === undefined) return false;
-        this.#event[event](payload);
+        return this.#event[event](payload);
     }
 }
 

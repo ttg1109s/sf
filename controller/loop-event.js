@@ -5,11 +5,20 @@ const loopEvent = {
     memory: {
         newHour: false,
         weatherDaysReady: 0, // ngày cuối cùng đã có dữ liệu thời tiết trong bảng 'weather', tăng dần mỗi lần weatherLoad chạy
+        lastStatusTick: 0,
 
     },
 
     clock() {
         const now = Date.now();
+        if (typeof EnergySystem !== 'undefined' && registry.player) {
+            EnergySystem.recover(registry.player, Math.max(0, now - (loopEvent.memory.lastEnergyTick || now)), registry.system.gamePaused === true);
+            loopEvent.memory.lastEnergyTick = now;
+        }
+        if (now - loopEvent.memory.lastStatusTick >= 1000) {
+            if (typeof playerStatusUI !== 'undefined') playerStatusUI.render();
+            loopEvent.memory.lastStatusTick = now;
+        }
         const delta = timer.distance(registry.system.currentTime, now) / 1000;
         const conversion = timer.realToIngame(delta);
         const currentDate = registry.system.currentDate;
