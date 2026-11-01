@@ -94,12 +94,18 @@ const mainThread = new TaskManager({
         // registry.control / registry.page: KHÔNG khôi phục — đây là state của phiên
         // làm việc hiện tại (đang chọn ô nào, đang mở tab nào...), luôn bắt đầu sạch.
 
-        // currentDate/season (lịch trong game) giữ nguyên như lúc lưu — thời gian
-        // trong game "dừng" khi tắt app. Nhưng currentTime (mốc quy đổi giờ thật ->
-        // giờ game của loopEvent.clock()) PHẢI đặt lại = lúc resume, nếu không
-        // khoảng cách "đã đóng app bao lâu" sẽ bị quy đổi thành hàng nghìn ngày
-        // trong game ngay tick đầu tiên.
-        registry.system.currentTime = Date.now();
+        // Neo mốc thời gian thực theo thời điểm trong game đã lưu.
+        // Nếu chỉ đặt currentTime = Date.now(), timer.realToIngame() sẽ bắt đầu
+        // lại từ ngày 1, 00:00 ở tick kế tiếp và ghi đè currentDate đã khôi phục.
+        // Tính độ lệch từ đầu năm game đến ngày/giờ/phút đã lưu để game tiếp tục
+        // đúng thời điểm, đồng thời không tính thời gian người chơi đóng ứng dụng.
+        const savedDate = registry.system.currentDate;
+        const savedGameSeconds = timer.ingameToReal({
+            d: Math.max(0, Number(savedDate?.[2] ?? 1) - 1),
+            h: Number(savedDate?.[3] ?? 0),
+            m: Number(savedDate?.[4] ?? 0),
+        });
+        registry.system.currentTime = Date.now() - savedGameSeconds * 1000;
 
         // weatherDaysReady không nằm trong registry nên không được lưu — tính lại
         // trực tiếp từ số dòng 'weather' vừa khôi phục thay vì để mặc định 0
