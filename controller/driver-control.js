@@ -136,33 +136,32 @@ class driverControl {
             try {
                 const itemInfo = registry.equipments[registry.control.toolName];
 
-            console.log('Action:', registry.control.toolName);
+                console.log('Action:', registry.control.toolName);
 
-            const knowledge = {
-                land: l.info(),
-                item: {
-                    id: itemInfo.itemID,
-                    quantity: itemInfo.quantity,
-                    info: new LookupProduct().item(itemInfo.groups, itemInfo.itemID),
-                },
-                season: registry.system.season,
-            };
+                const knowledge = {
+                    land: l.info(),
+                    item: {
+                        id: itemInfo.itemID,
+                        quantity: itemInfo.quantity,
+                        info: new LookupProduct().item(itemInfo.groups, itemInfo.itemID),
+                    },
+                    season: registry.system.season,
+                };
 
-            const self = {
-                energy: {
-                    stamina: registry.player.stamina[0],
-                    mental: registry.player.mental[0],
-                },
-                attr: {
-                    strength: registry.player.strength,
-                    intelligence: registry.player.intelligence,
-                    dexterity: registry.player.dexterity,
-                    endurance: registry.player.endurance,
-                },
-                identity: 'user',
-                action: registry.control.toolName,
-            };
-
+                const self = {
+                    energy: {
+                        stamina: registry.player.stamina[0],
+                        mental: registry.player.mental[0],
+                    },
+                    attr: {
+                        strength: registry.player.strength,
+                        intelligence: registry.player.intelligence,
+                        dexterity: registry.player.dexterity,
+                        endurance: registry.player.endurance,
+                    },
+                    identity: 'user',
+                    action: registry.control.toolName,
+                };
 
                 driver.on('callingToFarmer', { knowledge: knowledge, self: self, itemInfo: itemInfo });
             } finally {
