@@ -40,15 +40,17 @@ class Loop {
             this.stopped = true;
             return;
         }
-        this.callback();
-
-        setTimeout(() => {
-            if (this.stop) {
-                this.stopped = true;
-                return;
-            }
-            this.#timeout();
-        }, this.time);
+        try {
+            this.callback();
+        } finally {
+            setTimeout(() => {
+                if (this.stop) {
+                    this.stopped = true;
+                    return;
+                }
+                this.#timeout();
+            }, this.time);
+        }
 
     }
 
