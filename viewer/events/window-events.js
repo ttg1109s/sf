@@ -21,6 +21,7 @@ mouse.hand('click')
     .where('#app-show .app-list .items')
     .do(function () {
         const windowName = $(this).attr('name');
+        if (windowName === 'stock') driver.on('userOpenStock');
         if (!mouse.openWindow(windowName)) return false;
         $('#window-app .app-show').trigger('click');
     });
