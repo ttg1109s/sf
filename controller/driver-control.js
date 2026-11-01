@@ -287,7 +287,15 @@ class driverControl {
 
         userSellStock(payload) {
             if (!payload) return false;
-            return EconomySystem.sellStock(payload.index, payload.quantity ?? null);
+            const result = EconomySystem.sellStock(payload.index, payload.quantity ?? null);
+            if (result.ok && typeof stockUI !== 'undefined') stockUI.render(s.load());
+            return result;
+        },
+
+        userOpenStock() {
+            if (typeof stockUI === 'undefined') return false;
+            stockUI.render(s.load());
+            return true;
         },
 
         // Game-related events
