@@ -12,16 +12,11 @@ class Mouse {
         this.appShow = false;
         this.appShowing = false;
         this.appShowHeight = 0;
-        // Desktop: land-details/weather là panel nhỏ hiển thị sẵn (không có class d-none trong template).
-        // Mobile: window là fullscreen, không có window nào mở mặc định - phần ẩn DOM thực tế
-        // (objDOM.window.addClass('d-none')) do responsive.hideDefaultWindows() phụ trách, chạy
-        // ngay lúc responsive.js khởi tạo (sớm hơn Mouse) - ở đây chỉ cần đồng bộ lại state tracking.
-        this.window = (typeof responsive !== 'undefined' && responsive.isMobile)
-            ? {}
-            : {
-                'land-details': true,
-                'weather': true,
-            };
+        // Desktop: land-details và weather là các panel hiển thị sẵn.
+        this.window = {
+            'land-details': true,
+            'weather': true,
+        };
 
         // Các thông số tùy chỉnh cho drag với giá trị mặc định
         this.dragConfig = {
@@ -96,8 +91,6 @@ class Mouse {
         if (enable) {
             // Pointer Events hợp nhất mouse + touch + pen trong cùng 1 luồng xử lý
             $(document).on('pointerdown', selector, (e) => {
-                // Trên mobile, window hiển thị fullscreen (trừ chiều cao taskbar) nên không cho kéo thả
-                if (typeof responsive !== 'undefined' && responsive.isMobile) return;
                 this.startDrag(selector, e.currentTarget, e);
                 e.preventDefault();
             });

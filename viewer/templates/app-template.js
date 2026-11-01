@@ -69,8 +69,6 @@ const APP_TEMPLATE = `
                 <div class="items" state="locked"></div>
                 <div class="items" state="locked"></div>
             </div>
-            <div id="landNavPrev" class="d-none"></div>
-            <div id="landNavNext" class="d-none"></div>
         </div>
         <div id="landInfo" class="window" name="land-details">
             <div class="header">
@@ -321,7 +319,6 @@ const APP_TEMPLATE = `
                 <div class="items-tools bucket"></div>
                 <div class="items-tools pesticide"></div>
             </div>
-            <div id="toolsToggle"></div>
             <div id="functions" class="d-flex align-items-center">
                 <div id="alert" class="icon-before"></div>
                 <div id="reminder" class="icon-before"></div>

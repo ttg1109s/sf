@@ -80,50 +80,6 @@ class LandUI {
         return true;
     }
 
-    // (Mobile) Layout mới: 1 ô land hiện tại chiếm 1/3 màn trên cùng, điều hướng bằng nút prev/next
-    // thay vì menu popup Xem/Canh tác cũ - land-details giờ luôn mở nên không cần "Xem" riêng nữa.
-
-    showMobileCurrent(index) {
-        objDOM.areaLandItems.removeClass('current-mobile');
-        objDOM.areaLandItems.eq(index).addClass('current-mobile');
-    }
-
-    firstUnlockedIndex() {
-        let found = -1;
-        objDOM.areaLandItems.each(function (i) {
-            if (found === -1 && $(this).attr('state') !== 'locked') found = i;
-        });
-        return found;
-    }
-
-    // Gọi 1 lần khi land vừa load xong - chọn sẵn ô đầu tiên đã mở khoá nếu chưa có ô nào đang xem
-    initMobileCurrent() {
-        if (objDOM.areaLandItems.filter('.current-mobile').length) return -1; // đã có sẵn, không ghi đè
-        const first = this.firstUnlockedIndex();
-        if (first === -1) return -1;
-        this.showMobileCurrent(first);
-        return first;
-    }
-
-    // direction: 1 (next) hoặc -1 (prev). Bỏ qua ô locked, dừng lại ở đầu/cuối (không xoay vòng).
-    // Trả về index mới, hoặc -1 nếu không di chuyển được (đã ở biên, hoặc chưa có ô nào đang xem).
-    stepMobileCurrent(direction) {
-        const currentIndex = objDOM.areaLandItems.filter('.current-mobile').index();
-        if (currentIndex === -1) return -1;
-
-        const total = objDOM.areaLandItems.length;
-        let next = currentIndex;
-
-        for (let step = 0; step < total; step++) {
-            next += direction;
-            if (next < 0 || next >= total) return -1;
-            if (objDOM.areaLandItems.eq(next).attr('state') !== 'locked') {
-                this.showMobileCurrent(next);
-                return next;
-            }
-        }
-        return -1;
-    }
 }
 
 
