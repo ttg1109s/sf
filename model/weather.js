@@ -244,7 +244,10 @@ class Weather {
         const hour = [bfHour, hours, afHour];
 
         for (const dayIndex of day) {
-            cms.setIndex(dayIndex);
+            // Bảng weather dùng index từ 0, còn ngày game bắt đầu từ 1.
+            // Ngày 0 chỉ dùng làm giờ chuyển tiếp 23h đầu năm; dùng row ngày 1
+            // làm dữ liệu dự phòng để UI không đọc undefined.
+            cms.setIndex(Math.max(0, dayIndex - 1));
             const data = cms.info();
             if (!data) continue;
 
