@@ -191,13 +191,13 @@ class MySQL {
             records.push(fb.array.clone(record));
         }
 
-        if (start > 0 || len > 0) {
-            records = len > 0 ? records.slice(start, start + len) : records.slice(start);
-        }
-
         if (sort[0] !== 'default') {
             const [direction, column] = sort;
             fb.array.sortBy(records, direction, column);
+        }
+
+        if (start > 0 || len > 0) {
+            records = len > 0 ? records.slice(start, start + len) : records.slice(start);
         }
 
         return {
