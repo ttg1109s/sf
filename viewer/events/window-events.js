@@ -23,7 +23,6 @@ mouse.hand('click')
         const windowName = $(this).attr('name');
         if (windowName === 'stock') driver.on('userOpenStock');
         if (typeof playerStatusUI !== 'undefined') playerStatusUI.render();
-        if (windowName === 'stock') driver.on('userOpenStock');
         if (!mouse.openWindow(windowName)) return false;
         $('#window-app .app-show').trigger('click');
     });
