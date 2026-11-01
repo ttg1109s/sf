@@ -24,7 +24,8 @@ class ProgressionSystem {
     static award(player, amount, reason = 'activity') {
         if (!player || !Number.isFinite(amount) || amount <= 0) return false;
         if (!Array.isArray(player.experience)) player.experience = [0, this.requiredXP(player.level || 1)];
-        player.experience[0] += Math.floor(amount);
+        const gained = Number(amount.toFixed(2));
+        player.experience[0] += gained;
         const levels = [];
         while (player.experience[0] >= this.requiredXP(player.level || 1)) {
             player.experience[0] -= this.requiredXP(player.level || 1);
@@ -33,7 +34,7 @@ class ProgressionSystem {
             levels.push(player.level);
         }
         player.experience[1] = this.requiredXP(player.level || 1);
-        return { gained: Math.floor(amount), reason, levels, availableAttributePoints: player.attrPoints || 0 };
+        return { gained, reason, levels, availableAttributePoints: player.attrPoints || 0 };
     }
 
     static allocate(player, attribute, points = 1) {
@@ -78,6 +79,7 @@ class EconomySystem {
         const rows = db.table.get('stock') || [];
         const row = rows[index];
         if (!row || !Number.isFinite(row.quantity) || !Number.isFinite(row.price)) return { ok: false, code: 'stock_not_found' };
+        if (!Number.isFinite(row.start) || !Number.isFinite(row.end)) return { ok: false, code: 'invalid_freshness' };
         const amount = quantity === null ? row.quantity : Math.floor(quantity);
         if (amount <= 0 || amount > row.quantity) return { ok: false, code: 'invalid_quantity' };
         const now = Date.now();
