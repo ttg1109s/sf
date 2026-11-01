@@ -280,6 +280,11 @@ class driverControl {
             return result;
         },
 
+        userAllocateAttribute(payload) {
+            if (!payload) return false;
+            return ProgressionSystem.allocate(registry.player, payload.attribute, payload.points ?? 1);
+        },
+
         userSellStock(payload) {
             if (!payload) return false;
             return EconomySystem.sellStock(payload.index, payload.quantity ?? null);
@@ -393,7 +398,7 @@ class driverControl {
 
     on(event, payload) {
         if (this.#event[event] === undefined) return false;
-        this.#event[event](payload);
+        return this.#event[event](payload);
     }
 }
 
