@@ -334,9 +334,10 @@ class driverControl {
             const w = new Farmer({ knowledge: payload.knowledge, self: payload.self });
             const report = w.worker();
             if (report.complete && payload.self.identity === 'user' && typeof ProgressionSystem !== 'undefined') {
-                const xpByAction = { shovel: 1, fertilizer: 2, seed: 2, watercan: 1, bucket: 1, pesticide: 3, sickle: 5 };
+                // XP scales with the amount of meaningful work, not click count.
+                const xpByAction = { shovel: 0.05, fertilizer: 0.2, seed: 0.2, watercan: 0.05, bucket: 0.05, pesticide: 0.1, sickle: 0.5 };
                 const area = Math.max(1, Number(payload.knowledge.land?.slot?.cur) || 1);
-                ProgressionSystem.award(registry.player, Math.max(1, Math.ceil((xpByAction[payload.self.action] || 1) * Math.sqrt(area))), payload.self.action);
+                ProgressionSystem.award(registry.player, (xpByAction[payload.self.action] || 0.05) * area, payload.self.action);
             }
             if (report.complete) {
                 const callToDriver = {
