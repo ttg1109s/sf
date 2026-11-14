@@ -32,6 +32,11 @@ const systemThread = new TaskManager({
             install.saveGame(registry);
         },
         mode: 'interval',
+    },
+    stockExpiry: {
+        time: 1000, // hạn sử dụng được đối chiếu theo thời gian thực
+        exe: () => { s.expire(); },
+        mode: 'interval',
     }
 });
 
@@ -122,7 +127,7 @@ const mainThread = new TaskManager({
     }
 
     systemThread.registry();
-    systemThread.multiTask(['clock', 'mouseClear', 'autoSave'], 'enabled');
+    systemThread.multiTask(['clock', 'mouseClear', 'autoSave', 'stockExpiry'], 'enabled');
 
     mainThread.registry();
     mainThread.multiTask(['landState', 'landPest', 'landWater'], 'enabled');

@@ -250,6 +250,11 @@ class driverControl {
             bagUI.reload(b.load());
         },
 
+        stockLoad() {
+            s.expire();
+            stockUI.render();
+        },
+
         userWastage(payload) {
             const { stamina, mental, item } = payload.report;
             if (!fb.check.type([stamina, mental, item], 'number', true)) return false;
@@ -301,6 +306,7 @@ class driverControl {
             driver.on('weatherToday');
             driver.on('landLoad');
             driver.on('bagLoad');
+            driver.on('stockLoad');
         },
 
         callingToFarmer(payload) {
@@ -334,7 +340,8 @@ class driverControl {
                         driver.on('bringToStock', {
                             seedID: report.update.pack.seedID,
                             fertilizerID: report.update.pack.fertilizerID,
-                            yield: report.update.pack.yield
+                            yield: report.update.pack.yield,
+                            quality: report.update.pack.quality
                         });
                     }
                 }
@@ -357,10 +364,11 @@ class driverControl {
             const pack = {
                 seed: p.item('seed', payload.seedID),
                 fertilizer: p.item('fertilizer', payload.fertilizerID),
-                yield: payload.yield
+                yield: payload.yield,
+                quality: payload.quality
             }
 
-            s.revicer(pack);
+            s.receiver({ ...pack, seedID: payload.seedID });
 
         },
 

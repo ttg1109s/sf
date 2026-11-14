@@ -6,7 +6,7 @@
 
 // Tăng số này mỗi khi đổi danh sách cột (createTable) của bất kỳ bảng nào bên dưới.
 // reconcileSchema() dùng số này để biết save cũ có cần đồng bộ lại cột hay không.
-const DB_SCHEMA_VERSION = 1;
+const DB_SCHEMA_VERSION = 2;
 
 class Install {
 
@@ -33,6 +33,15 @@ class Install {
     #defaultRowFor(tableName) {
         const defaults = {
             land: () => this.#landDefaultRow(),
+            stock: () => ({
+                start: null, end: null, seed: null, seedID: null, group: null,
+                quality: 70, qualityGrade: 'B', fertilizer: null, fertilizerGroup: null,
+                quantity: 0, initialQuantity: 0, unitPrice: 0, price: 0, status: 'fresh'
+            }),
+            stock_transactions: () => ({
+                timestamp: null, type: null, seed: null, quantity: 0,
+                unitPrice: 0, total: 0, batchStart: null, details: null
+            }),
         };
         return defaults[tableName] ? defaults[tableName]() : null;
     }
@@ -130,7 +139,15 @@ class Install {
             });
         }
 
-        db.createTable('stock', ['start', 'end', 'seed', 'group', 'quality', 'price', 'quantity']);
+        db.createTable('stock', [
+            'start', 'end', 'seed', 'seedID', 'group', 'quality', 'qualityGrade',
+            'fertilizer', 'fertilizerGroup', 'quantity', 'initialQuantity',
+            'unitPrice', 'price', 'status'
+        ]);
+        db.createTable('stock_transactions', [
+            'timestamp', 'type', 'seed', 'quantity', 'unitPrice',
+            'total', 'batchStart', 'details'
+        ]);
 
     }
 
@@ -155,6 +172,15 @@ class Install {
             const rows = db.table.get(tableName);
 
             for (const row of rows) {
+                // Save v1 stored fertilizer category in "quality"; migrate without losing stock.
+                if (tableName === 'stock' && typeof row.quality !== 'number') {
+                    row.fertilizerGroup = row.fertilizerGroup || row.quality || 'Unknown';
+                    row.quality = 70;
+                    row.qualityGrade = 'B';
+                    row.unitPrice = Number(row.price) || 0;
+                    row.initialQuantity = Number(row.quantity) || 0;
+                    row.status = Number(row.end) <= Date.now() ? 'expired' : 'fresh';
+                }
                 for (const column of columns) {
                     if (!(column in row)) {
                         row[column] = (defaultRow && column in defaultRow)

@@ -77,6 +77,7 @@ const objDOM = {
     bagItemsUse: $("#bag .footer-action .use"),
     bagContextMenu: $('#bag .footer-action'),
 
+    stockID: $("#stock"),
     productID: $("#products"),
     productBody: $("#products .body"),
     productBodyTabs: $("#products .body .tab-content"),

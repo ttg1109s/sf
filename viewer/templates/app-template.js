@@ -263,6 +263,27 @@ const APP_TEMPLATE = `
             </div>
         </div>
 
+        <div id="stock" class="window d-none" name="stock">
+            <div class="header">
+                <div class="icon-before app-title" name="stock">Agricultural Stock</div>
+                <div class="icon-before close"></div>
+            </div>
+            <div class="stock-summary">
+                <span>Tồn kho còn hạn: <b id="stock-count">0</b></span>
+                <span>Số dư: <b id="stock-balance">0 ₫</b></span>
+            </div>
+            <div id="stock-filters">
+                <button class="stock-filter active" data-status="all">Tất cả</button>
+                <button class="stock-filter" data-status="fresh">Còn hạn</button>
+                <button class="stock-filter" data-status="expired">Hết hạn</button>
+                <button class="stock-filter" data-status="sold">Đã bán</button>
+                <button class="stock-filter" data-status="discarded">Đã hủy</button>
+            </div>
+            <div id="stock-list"></div>
+            <div class="stock-section-title">Lịch sử giao dịch gần đây</div>
+            <div id="stock-history" class="stock-history"></div>
+        </div>
+
         <div id="products" class="window d-none" name="nation-products-center">
             <div class="header">
                 <div class="icon-before app-title" name="nation-products-center">Nantion Products Center</div>
