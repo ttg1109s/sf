@@ -35,7 +35,10 @@ const systemThread = new TaskManager({
     },
     stockExpiry: {
         time: 1000, // hạn sử dụng được đối chiếu theo thời gian thực
-        exe: () => { s.expire(); },
+        exe: () => {
+            s.expire();
+            if (objDOM.stockID.is(':visible')) stockUI.render();
+        },
         mode: 'interval',
     }
 });

@@ -369,6 +369,7 @@ class driverControl {
             }
 
             s.receiver({ ...pack, seedID: payload.seedID });
+            driver.on('stockLoad');
 
         },
 
