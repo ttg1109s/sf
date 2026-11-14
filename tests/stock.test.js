@@ -51,7 +51,7 @@ test('bán một phần trừ đúng tồn kho và cộng tiền; không cho bá
     const result = stock.sell(0, 4);
     assert.equal(result.quantity, 4);
     assert.equal(result.remaining, 6);
-    assert.equal(registry.player.money, 1506);
+    assert.equal(registry.player.money, 100506);
     assert.equal(tables.stock[0].quantity, 6);
     assert.throws(() => stock.sell(0, 7), /cannot exceed/);
 });
@@ -78,4 +78,10 @@ test('từ chối dữ liệu thu hoạch không hợp lệ', () => {
     const { stock } = createStock();
     assert.throws(() => stock.receiver({ seed, fertilizer, yield: 0 }), /positive finite/);
     assert.throws(() => stock.receiver({ seed: { ...seed, freshTime: null }, fertilizer, yield: 1 }), /freshTime/);
+});
+
+test('không cho nhập vượt sức chứa hiện có', () => {
+    const { stock } = createStock();
+    stock.receiver({ seed, fertilizer, yield: 5000, quality: 70 });
+    assert.throws(() => stock.receiver({ seed, fertilizer, yield: 1, quality: 70 }), /capacity exceeded/);
 });

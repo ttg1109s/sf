@@ -18,7 +18,7 @@ class StockUI {
         const history = s.history(30);
         const balance = this.#number(registry.player.money);
         $('#stock-balance').text(balance + ' ₫');
-        $('#stock-count').text(this.#number(rows.filter(row => row.status === 'fresh').reduce((sum, row) => sum + (Number(row.quantity) || 0), 0)));
+        $('#stock-count').text(this.#number(s.list('fresh').reduce((sum, row) => sum + (Number(row.quantity) || 0), 0)));
         $('#stock-filters .stock-filter').removeClass('active')
             .filter('[data-status="' + this.filter + '"]').addClass('active');
 
