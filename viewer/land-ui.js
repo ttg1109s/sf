@@ -36,8 +36,8 @@ class LandUI {
             cursor: 'none',
             display: 'block',
             backgroundImage: `url(${toolImgPath})`,
-            left: position.x - 60 / 2,
-            top: position.y - 60 / 2,
+            left: position.x - 64 / 2,
+            top: position.y - 64 / 2,
         });
 
         let scale = 1;
