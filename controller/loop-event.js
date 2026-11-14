@@ -42,7 +42,11 @@ const loopEvent = {
         }
 
         const seasonName = new Weather({ day: currentDate[2] }).getSeason();
-        if (seasonName) registry.system.season = seasonName;
+        if (seasonName) {
+            const previousSeason = registry.system.season;
+            registry.system.season = seasonName;
+            if (previousSeason !== seasonName) driver.on('seasonUpdate', { season: seasonName });
+        }
 
         const hours = currentDate[3] % 12 || 12;
         const half = currentDate[3] >= 12 ? 'PM' : 'AM';

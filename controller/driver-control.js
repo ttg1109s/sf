@@ -194,6 +194,12 @@ class driverControl {
         },
 
         // Weather-related events
+        seasonUpdate(payload) {
+            const seasons = ['spring', 'summer', 'autumn', 'winter'];
+            if (!seasons.includes(payload?.season)) return false;
+            $('#weather .weather-header .background').removeClass(seasons.join(' ')).addClass(payload.season);
+        },
+
         weatherLoad() {
             const seasonName = new Weather({day: registry.system.currentDate[2]}).getSeason();
             const season = ConfigSys.seasons[seasonName];
@@ -303,6 +309,7 @@ class driverControl {
         },
 
         loadEveryThing() {
+            driver.on('seasonUpdate', { season: registry.system.season });
             driver.on('weatherToday');
             driver.on('landLoad');
             driver.on('bagLoad');

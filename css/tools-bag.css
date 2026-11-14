@@ -59,31 +59,31 @@
 }
 
 #toolsList .shovel::before {
-     background-image: url(graphic/tool/shovel.png);
+     background-image: url(graphic/tool/icons.svg#shovel);
 }
 
 #toolsList .sickle::before {
-     background-image: url(graphic/tool/sickle.png);
+     background-image: url(graphic/tool/icons.svg#sickle);
      background-size: 110%;
 }
 
 #toolsList .fertilizer::before {
-     background-image: url(graphic/tool/fertilizer.png);
+     background-image: url(graphic/tool/icons.svg#fertilizer);
 }
 
 #toolsList .seed::before {
-     background-image: url(graphic/tool/seed.png);
+     background-image: url(graphic/tool/icons.svg#seed);
 }
 
 #toolsList .watercan::before {
-     background-image: url(graphic/tool/watercan.png);
+     background-image: url(graphic/tool/icons.svg#watercan);
 }
 
 #toolsList .bucket::before {
-     background-image: url(graphic/tool/bucket.png);
+     background-image: url(graphic/tool/icons.svg#bucket);
 }
 
 #toolsList .pesticide::before {
-     background-image: url(graphic/tool/pesticide.png);
+     background-image: url(graphic/tool/icons.svg#pesticide);
 }
 

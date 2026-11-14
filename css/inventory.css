@@ -58,7 +58,7 @@
     height: 85px;
     width: 85px;
     background-color: #f6f6f6;
-    background-image: url(graphic/bag/empty.png);
+    background-image: url(graphic/bag/icons.svg#empty);
     background-size: 40%;
 }
 
@@ -96,35 +96,35 @@
 }
 
 #bag .items[name="shovel"] {
-    background-image: url(graphic/bag/shovel.png);
+    background-image: url(graphic/bag/icons.svg#shovel);
 
 }
 
 #bag .items[name="sickle"] {
-    background-image: url(graphic/bag/sickle.png);
+    background-image: url(graphic/bag/icons.svg#sickle);
 
 }
 
 #bag .items[name="fertilizer"] {
-    background-image: url(graphic/bag/fertilizer.png);
+    background-image: url(graphic/bag/icons.svg#fertilizer);
 
 }   
 
 #bag .items[name="seed"] {
-    background-image: url(graphic/bag/seed.png);
+    background-image: url(graphic/bag/icons.svg#seed);
 
 }
 #bag .items[name="watercan"] {
-    background-image: url(graphic/bag/watercan.png);
+    background-image: url(graphic/bag/icons.svg#watercan);
 
 }
 #bag .items[name="bucket"] {
-    background-image: url(graphic/bag/bucket.png);
+    background-image: url(graphic/bag/icons.svg#bucket);
 
 }
 
 #bag .items[name="pesticide"] {
-    background-image: url(graphic/bag/pesticide.png);
+    background-image: url(graphic/bag/icons.svg#pesticide);
 
 }
 

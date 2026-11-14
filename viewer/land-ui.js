@@ -29,8 +29,8 @@ class LandUI {
             return false;
         }
 
-        let toolImgPath = `graphic/tool/${name}.png`;
-        if (!toolImgPath) toolImgPath = 'graphic/tool/undefined.png';
+        const validTools = ['shovel', 'sickle', 'fertilizer', 'seed', 'watercan', 'bucket', 'pesticide'];
+        const toolImgPath = validTools.includes(name) ? `graphic/tool/icons.svg#${name}` : 'graphic/tool/icons.svg#shovel';
 
         objDOM.toolLandID.css({
             cursor: 'none',
@@ -42,7 +42,7 @@ class LandUI {
 
         let scale = 1;
         let rotation = 0;
-        let translate = { x: -30, y: 30 };
+        let translate = { x: -32, y: 32 };
 
         if (transform) {
             if (["sickle", "fertilizer", "watercan", "bucket", "pesticide"].includes(name)) {

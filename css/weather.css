@@ -28,7 +28,7 @@
 
 #weather .weather-header .background.spring {
      border-radius: 10px;
-     background-image: url(graphic/weather/bg-spring.jpg);
+     background-image: url(graphic/weather/weather.svg#spring);
      background-size: cover;
      background-position: center;
      background-repeat: no-repeat;
@@ -183,3 +183,8 @@ body.night .weather-body .items {
      font-weight: 900;
 }
 
+
+#weather .weather-header .background.summer,#weather .weather-header .background.autumn,#weather .weather-header .background.winter{border-radius:10px;background-size:cover;background-position:center;background-repeat:no-repeat}
+#weather .weather-header .background.summer{background-image:url(graphic/weather/weather.svg#summer)}
+#weather .weather-header .background.autumn{background-image:url(graphic/weather/weather.svg#autumn)}
+#weather .weather-header .background.winter{background-image:url(graphic/weather/weather.svg#winter)}
