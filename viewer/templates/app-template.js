@@ -270,8 +270,10 @@ const APP_TEMPLATE = `
             </div>
             <div class="stock-summary">
                 <span>Tồn kho còn hạn: <b id="stock-count">0</b></span>
+                <span>Dung lượng: <b id="stock-capacity">0 / 5.000</b></span>
                 <span>Số dư: <b id="stock-balance">0 ₫</b></span>
             </div>
+            <div class="stock-summary-actions"><button id="stock-upgrade">Mở rộng kho +1.000 (50.000 ₫)</button></div>
             <div id="stock-filters">
                 <button class="stock-filter active" data-status="all">Tất cả</button>
                 <button class="stock-filter" data-status="fresh">Còn hạn</button>

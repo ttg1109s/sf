@@ -30,6 +30,9 @@ class Stock extends CMS {
             throw new Error('Stock: seed information is required.');
         if (!this.#validQuantity(pack.yield))
             throw new Error('Stock: harvest quantity must be a positive finite number.');
+        const capacity = this.capacity();
+        if (pack.yield > capacity.available)
+            throw new Error(`Stock: warehouse capacity exceeded. Available: ${capacity.available}.`);
         const fresh = pack.seed.freshTime;
         if (!fresh || !Number.isFinite(timer.ingameToReal(fresh)) || timer.ingameToReal(fresh) <= 0)
             throw new Error('Stock: a positive freshTime is required for every crop.');
@@ -126,6 +129,30 @@ class Stock extends CMS {
         })) throw new Error('Stock: failed to update batch after discard.');
         this.#log('discard', row, quantity, 0, 'Stock discarded');
         return { success: true, quantity, remaining };
+    }
+
+    capacity() {
+        const rows = super.load() || [];
+        const used = rows.reduce((sum, row) => sum + Math.max(0, Number(row.quantity) || 0), 0);
+        const total = Number(registry.system.stockCapacity) > 0 ? Number(registry.system.stockCapacity) : 5000;
+        return { used, total, available: Math.max(0, total - used) };
+    }
+
+    upgradeCapacity(additional = 1000, cost = 50000) {
+        if (!Number.isInteger(additional) || additional <= 0 ||
+            !Number.isFinite(cost) || cost < 0)
+            throw new Error('Stock: invalid warehouse upgrade parameters.');
+        const balance = Number(registry.player.money) || 0;
+        if (balance < cost) throw new Error('Stock: insufficient funds for warehouse expansion.');
+        const current = this.capacity();
+        registry.player.money = balance - cost;
+        registry.system.stockCapacity = current.total + additional;
+        db.insert('stock_transactions', {
+            timestamp: Date.now(), type: 'capacity-upgrade', seed: 'Warehouse',
+            quantity: additional, unitPrice: 0, total: -cost,
+            batchStart: null, details: 'Warehouse capacity expanded'
+        });
+        return { capacity: registry.system.stockCapacity, cost, balance: registry.player.money };
     }
 
     history(limit = 100) {

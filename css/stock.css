@@ -60,3 +60,6 @@
 #stock .stock-history-row { font-size: 11px; padding: 5px 0; border-bottom: 1px solid #f1f1f1; color: #5b625e; }
 #stock .stock-empty { padding: 25px 10px; text-align: center; color: #858d88; font-size: 13px; }
 #stock .stock-section-title { padding: 8px 14px 0; font-size: 12px; font-weight: 700; color: #59645e; text-transform: uppercase; }
+
+#stock .stock-summary-actions { padding: 8px 14px 0; text-align: right; }
+#stock-upgrade { border: 0; border-radius: 7px; padding: 6px 10px; background: #e4eee7; color: #245b3d; font-size: 12px; }

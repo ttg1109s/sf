@@ -24,3 +24,13 @@ $(document).on('click', '#stock .stock-discard', function () {
         window.alert(error.message);
     }
 });
+
+$(document).on('click', '#stock-upgrade', function () {
+    if (!window.confirm('Mở rộng sức chứa kho thêm 1.000 đơn vị với chi phí 50.000 ₫?')) return;
+    try {
+        s.upgradeCapacity(1000, 50000);
+        driver.on('stockLoad');
+    } catch (error) {
+        window.alert(error.message);
+    }
+});
